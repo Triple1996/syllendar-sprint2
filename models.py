@@ -2,14 +2,15 @@
 import flask_sqlalchemy
 from app import db
 
+# TODO Add tables
 
-class Usps(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    address = db.Column(db.String(120))
+# class table(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     x = db.Column(db.String(120))
     
-    def __init__(self, a):
-        self.address = a
+#     def __init__(self, a):
+#         self.x = a
         
-    def __repr__(self):
-        return '<Usps address: %s>' % self.address 
+#     def __repr__(self):
+#         return '<x: %s>' % self.x 
 
