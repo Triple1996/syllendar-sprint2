@@ -22,4 +22,3 @@ export function GoogleButton() {
       cookiePolicy={'single_host_origin'}/>
       );
 }
-
