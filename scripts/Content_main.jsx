@@ -8,7 +8,7 @@ export function Content_main () {
      const [image, setImage] = React.useState([]);
      const [email, setEmail] = React.useState([]);
      const [name, setName] = React.useState([]);
-     
+    
      function getImage() {
         React.useEffect(() => {
             Socket.on('imageLinks', (data) => {
@@ -48,11 +48,11 @@ export function Content_main () {
     return (
         <div>
         <h1>My Calendar</h1>
-        <div class="info">
+        <div className="info">
         <img src={image} width="90" height="90"/>
         <p>{email}</p>
-        <p1>{name}</p1>
-        <div class="buttonpostion">
+        <p>{name}</p>
+        <div className="buttonpostion">
         <form onSubmit={handleSubmit}>
         <button>Sign Out</button>
         </form>
