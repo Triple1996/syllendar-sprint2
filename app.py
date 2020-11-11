@@ -26,6 +26,26 @@ db.app = app
 db.create_all()
 db.session.commit()
 
+@socketio.on('new image')
+def new_image(data):
+    imageLink=(data['image'])
+    socketio.emit('imageLinks', {
+        'image': imageLink
+    })
+    
+@socketio.on('new email')
+def new_email(data):
+    emailAddress=(data['email'])
+    socketio.emit('emailAddress', {
+        'email': emailAddress
+    })
+
+@socketio.on('new name')
+def new_name(data):
+    realName=(data['name'])
+    socketio.emit('realname', {
+        'name': realName
+    })
 
 @app.route('/')
 def index():
