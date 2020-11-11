@@ -2,7 +2,6 @@
 import * as React from 'react';
 import { Socket } from './Socket';
 import ReactDOM from 'react-dom';
-import Modal from 'react-modal';
 
 
 export function Content_main () {
