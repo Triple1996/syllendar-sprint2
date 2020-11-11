@@ -2,22 +2,61 @@
 import * as React from 'react';
 import { Socket } from './Socket';
 import ReactDOM from 'react-dom';
+import Modal from 'react-modal';
 
 
-function handleSubmit(event) {
+export function Content_main () {
+     const [image, setImage] = React.useState([]);
+     const [email, setEmail] = React.useState([]);
+     const [name, setName] = React.useState([]);
+     
+     function getImage() {
+        React.useEffect(() => {
+            Socket.on('imageLinks', (data) => {
+                 console.log("Received user image from server: " + data['image']);
+                 setImage(data['image']);
+            })
+        });
+    }
+    getImage();
     
+    function getEmail() {
+        React.useEffect(() => {
+            Socket.on('emailAddress', (data) => {
+                 console.log("Received user email address from server: " + data['email']);
+                 setEmail(data['email']);
+            })
+        });
+    }
+    getEmail();
+    
+    function getName() {
+        React.useEffect(() => {
+            Socket.on('realname', (data) => {
+                 console.log("Received user name from server: " + data['name']);
+                 setName(data['name']);
+            })
+        });
+    }
+    getName();
+    
+    function handleSubmit(event) {
     
      ReactDOM.render(<Content />, document.getElementById('content'));
 }
+    
 
-
-export function Content_main() {
     return (
         <div>
-             <h1>My Calendar</h1>
-             <form onSubmit={handleSubmit}>
-             <button>Sign Out</button>
+        <h1>My Calendar</h1>
+        <div class="info">
+        <img src={image} width="90" height="90"/>
+        <p>{email}</p>
+        <p1>{name}</p1>
+        <div class="buttonpostion">
+        <form onSubmit={handleSubmit}>
+        <button>Sign Out</button>
         </form>
-        </div>
+        </div></div></div>
     );
 }
