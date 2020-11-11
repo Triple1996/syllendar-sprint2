@@ -7,6 +7,28 @@ import { Content_main } from './Content_main';
 
  function responseGoogle(response) {
     console.log(response);
+    let url = response.profileObj.imageUrl;
+    let email = response.profileObj.email;
+    let name = response.profileObj.name;
+    
+    Socket.emit('new image', {
+        'image': url,
+    });
+    
+    console.log('Sent the image link ' + url + ' to the server!');
+    
+    Socket.emit('new email', {
+        'email': email,
+    });
+    
+    console.log('Sent the email address ' + email + ' to the server!');
+    
+    Socket.emit('new name', {
+        'name': name,
+    });
+    
+    console.log('Sent the name ' + name + ' to the server!');
+    
     
     ReactDOM.render(<Content_main />, document.getElementById('content'));
 }
@@ -15,7 +37,7 @@ export function GoogleButton() {
   return( 
       <GoogleLogin
       className="googleButton"
-      clientId="addyourclientId"
+      clientId="668309875676-im3a1fisoqlb32o5d09dd8t243qn9cok.apps.googleusercontent.com"
       buttonText="Login"
       onSuccess={responseGoogle}
       onFailure={responseGoogle}
