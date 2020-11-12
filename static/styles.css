@@ -32,7 +32,7 @@ img {
   border-radius: 50%;
 }
 
-.App {
+.Calendar {
   font-family: sans-serif;
   text-align: center;
 }
@@ -41,13 +41,16 @@ img {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
 }
-.week {
+.week > * {
   font-weight: bold;
+  border: 2px solid black;
+  background-color: #cccccc;
 }
-.day {
+.day > * {
   background-color: white;
   width: 100%;
-  height: 20%;
+  height: 100px;
+  border: 1px solid black;
 }
 #dayEvent {
   height: 20px;
@@ -58,14 +61,9 @@ img {
   position: fixed;
 }
 
-
-
 .container{
   background-image: linear-gradient(lightblue, grey);
   width: 100%;
   height:100%;
  
 }
-
-
-    
