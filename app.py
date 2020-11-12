@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 import flask
 import flask_sqlalchemy
+from sqlalchemy.sql import exists 
 import flask_socketio
 # import models 
 
@@ -47,8 +48,9 @@ def new_login(data):
     email = (data['email'])
     
     # TODO - Add to database if user does not exist 
-    db.session.add(Users(fullname, email, imageLink))
-    db.session.commit()
+    if (db.session.query(exists().where(Users.email == email)).scalar()) != True:
+        db.session.add(Users(fullname, email, imageLink))
+        db.session.commit()
 
 @socketio.on('new image')
 def new_image(data):
