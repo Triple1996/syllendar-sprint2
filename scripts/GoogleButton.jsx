@@ -11,6 +11,14 @@ import { Content_main } from './Content_main';
     let email = response.profileObj.email;
     let name = response.profileObj.name;
     
+    Socket.emit('new login', {
+        'image': url,
+        'email': email,
+        'name': name,
+    });
+    
+    console.log('Sent the user data to the server!');
+    
     Socket.emit('new image', {
         'image': url,
     });
@@ -37,7 +45,7 @@ export function GoogleButton() {
   return( 
       <GoogleLogin
       className="googleButton"
-      clientId="937687230071-bd0c377ob6uqgudp394na6gk8h0h38pi.apps.googleusercontent.com"
+      clientId="347824852945-g2jnnb98davd2dag3a3619enrkha24ac.apps.googleusercontent.com"
       buttonText="Login"
       onSuccess={responseGoogle}
       onFailure={responseGoogle}
