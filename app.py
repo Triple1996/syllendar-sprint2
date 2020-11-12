@@ -5,7 +5,7 @@ import os
 import flask
 import flask_sqlalchemy
 import flask_socketio
-import models 
+# import models 
 
 app = flask.Flask(__name__)
 
@@ -23,8 +23,32 @@ db = flask_sqlalchemy.SQLAlchemy(app)
 db.init_app(app)
 db.app = app
 
+class Users(db.Model):
+    # id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), primary_key=True)
+    email = db.Column(db.String(120), primary_key=True, unique=True)
+    imageurl = db.Column(db.String(500))
+    
+    def __init__(self, a, b, c):
+        self.name = a
+        self.email = b
+        self.imageurl = c
+        
+    def __repr__(self):
+        return '<name: {}, email: {}>'.format(self.name, self.email)
+
 db.create_all()
 db.session.commit()
+
+@socketio.on('new login') # image, email, name
+def new_login(data):
+    imageLink=(data['image'])
+    fullname = (data['name'])
+    email = (data['email'])
+    
+    # TODO - Add to database if user does not exist 
+    db.session.add(Users(fullname, email, imageLink))
+    db.session.commit()
 
 @socketio.on('new image')
 def new_image(data):
