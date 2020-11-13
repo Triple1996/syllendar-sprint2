@@ -1,12 +1,23 @@
 # app.py
+# pylint: disable=missing-function-docstring
+# pylint: disable=invalid-name
+# pylint: disable=wrong-import-position
+# pylint: disable=invalid-envvar-default
+# pylint: disable=no-member
+# pylint: disable=missing-module-docstring
+# pylint: disable=missing-class-docstring
+# pylint: disable=too-few-public-methods
+# pylint: disable=singleton-comparison
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-instance-attributes
+import os
 from os.path import join, dirname
 from dotenv import load_dotenv
-import os
 import flask
 import flask_sqlalchemy
-from sqlalchemy.sql import exists 
+from sqlalchemy.sql import exists
 import flask_socketio
-# import models 
+# import models
 
 app = flask.Flask(__name__)
 
@@ -29,12 +40,12 @@ class Users(db.Model):
     name = db.Column(db.String(120))
     email = db.Column(db.String(120), primary_key=True, unique=True)
     imageurl = db.Column(db.String(500))
-    
+
     def __init__(self, a, b, c):
         self.name = a
         self.email = b
         self.imageurl = c
-        
+
     def __repr__(self):
         return '<name: {}, email: {}>'.format(self.name, self.email)
 
@@ -49,7 +60,7 @@ class Events(db.Model):
     event_end_time = db.Column(db.String(50), nullable = False)
     location = db.Column(db.String(120))
     description = db.Column(db.String(1000))
-    
+
     def __init__(self, name, email, title, startdt, starttm, enddt, endtm, location, des):
         self.name = name
         self.email = email
@@ -60,9 +71,11 @@ class Events(db.Model):
         self.event_end_time = endtm
         self.location = location
         self.description = des
-        
+
     def __repr__(self):
-        return '<name: {}, event: {}>, start_date: {}, start_time: {}, end_time: {}'.format(self.name, self.event_title, self.event_start_date, self.event_start_time, self.event_end_time)
+        return '<name: {}, event: {}>, start_date: {}, start_time: {}, end_time: {}'\
+        .format(self.name, self.event_title, self.event_start_date, \
+        self.event_start_time, self.event_end_time)
 
 db.create_all()
 db.session.commit()
@@ -82,23 +95,23 @@ def add_event(data):
     endtm = data['endtm']
     location = data['location']
     des = data['des']
-    
+
     print("adding new event!")
-    
+
     #TODO - figure out how to check if the event exists. Needs update functions if it's the same event
-    
+
     db.session.add(Events(name, email, title, startdt, starttm, enddt, endtm, location, des ))
     db.session.commit()
-    
+
     print("Added to the db")
-    
+
 @socketio.on('new login') # image, email, name
 def new_login(data):
     imageLink=(data['image'])
     fullname = (data['name'])
     email = (data['email'])
-    
-    # TODO - Add to database if user does not exist 
+
+    # TODO - Add to database if user does not exist
     if (db.session.query(exists().where(Users.email == email)).scalar()) != True:
         db.session.add(Users(fullname, email, imageLink))
         db.session.commit()
@@ -109,7 +122,7 @@ def new_image(data):
     socketio.emit('imageLinks', {
         'image': imageLink
     })
-    
+
 @socketio.on('new email')
 def new_email(data):
     emailAddress=(data['email'])
@@ -128,7 +141,7 @@ def new_name(data):
 def index():
     return flask.render_template("index.html")
 
-if __name__ == '__main__': 
+if __name__ == '__main__':
     socketio.run(
         app,
         host=os.getenv('IP', '0.0.0.0'),
