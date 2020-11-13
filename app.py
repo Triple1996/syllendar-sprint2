@@ -10,6 +10,10 @@
 # pylint: disable=singleton-comparison
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-instance-attributes
+# pylint: disable=trailing-whitespace
+# pylint: disable=line-too-long
+# pylint: disable=fixme
+
 import os
 from os.path import join, dirname
 from dotenv import load_dotenv
