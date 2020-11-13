@@ -3,27 +3,67 @@ import Modal from './Modal';
 import useModal from './useModal';
 
 export default function Calendar() {
-  //const [days, setDays] = React.useState([]);
   const {isShowing, toggle} = useModal();
-  const [date, setDate] = useState("")
+  const [date, setDate] = useState("");
   
   function daySelected(date) {
     toggle();
-    setDate(date)
+    setDate(date);
+    if (date == null) {
+      return;
+    }
+    return <button id="dayEvent"></button>;
   }
   
-  let i = [];
+  let y = [];
+  let currentTime = new Date();
+  let currentDate = currentTime.getDate();
+  let currentMonth = currentTime.getMonth() + 1;
+  let currentYear = currentTime.getFullYear();
+  let century = parseFloat(currentYear.toString().slice(0, 2));
+  let year = parseFloat(currentYear.toString().slice(-2));
+  let calMonth = currentTime.toLocaleString("default", { month: "long" });
+  let firstPart =
+    currentDate + parseFloat((2.6 * currentMonth - 0.2).toString().slice(0, 4));
+  let secondPart = 2.0 * parseFloat(century);
+  let thirdPart = parseFloat((firstPart - secondPart).toString().slice(0, 4));
+  let fourthPart = thirdPart + year + year / 4 + century / 4;
+  let fifthPart = Math.trunc(fourthPart % 7);
+  var i = 0;
   let x = 1;
-  //TODO add function to put the correct date on the correct day
-  //TODO need to remove hard coded 32 and figure out how to get the proper amount of days in the month
-  while (x !== 32) {
-    i[x] = x;
+  for (i; i < fifthPart - 1; i++) {
+    y.push(null);
+  }
+  let monthMax;
+  if (currentMonth === 2) {
+    if (currentYear % 4 === 0) {
+      monthMax = 29;
+    } else {
+      monthMax = 28;
+    }
+  } else if (
+    currentMonth === 4 ||
+    currentMonth === 6 ||
+    currentMonth === 9 ||
+    currentMonth === 11
+  ) {
+    monthMax = 30;
+  } else {
+    monthMax = 31;
+  }
+
+  while (x !== monthMax + 1) {
+    y[x] = x;
     x++;
   }
-  
+
   return (
     <div className="Syllendar">
-      <div className="month"> </div>
+      <div className="month">
+        <h1>
+          {calMonth} {currentYear}
+        </h1>
+      </div>
       <div className="week">
         <div className="center">Sun</div>
         <div className="center">Mon</div>
