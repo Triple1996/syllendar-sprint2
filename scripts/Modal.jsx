@@ -8,13 +8,21 @@ export default function Modal({isShowing, hide, date}) {
   //example of how to access the day
   console.log(date.day) //this will print out the number of which of the boxes in the calendar component got selected.
   //we can create the date something like this
+<<<<<<< HEAD
   let currentDate = date.month + "/" + date.day + "/" + date.year;
+=======
+  let startdt = date.month + "/" + date.day + "/" + date.year
+>>>>>>> 5e3d8064697891f378f30c7f12d715a77b55e8a2
   //then we can pass this as the startdate and remove the whole startdt useState hook, I will comment it out . 
   
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [title, setTitle] = useState("");
+<<<<<<< HEAD
   const [startdt, setStartdt] = useState("");
+=======
+  //const [startdt, setStartdt] = useState("");
+>>>>>>> 5e3d8064697891f378f30c7f12d715a77b55e8a2
   const [starttm, setStarttm] = useState("");
   const [enddt, setEnddt] = useState("");
   const [endtm, setEndtm] = useState("");
@@ -40,7 +48,11 @@ export default function Modal({isShowing, hide, date}) {
     setStarttm("")
     setEnddt("")
     setEndtm("")
+<<<<<<< HEAD
     setLocation("")
+=======
+    location("")
+>>>>>>> 5e3d8064697891f378f30c7f12d715a77b55e8a2
     setDes("")
   }
   
@@ -94,6 +106,7 @@ export default function Modal({isShowing, hide, date}) {
                   <div className="col-10 text-center">
                     <input 
                       className="form-group"
+<<<<<<< HEAD
                       value={currentDate}
                       onChange={(e) => setStartdt(e.target.value)}
                       placeholder="Start Date"
@@ -102,6 +115,8 @@ export default function Modal({isShowing, hide, date}) {
                   <div className="col-10 text-center">
                     <input 
                       className="form-group"
+=======
+>>>>>>> 5e3d8064697891f378f30c7f12d715a77b55e8a2
                       value={enddt}
                       onChange={(e) => setEnddt(e.target.value)}
                       placeholder="End Date"
@@ -128,7 +143,11 @@ export default function Modal({isShowing, hide, date}) {
                       className="form-group"
                       value={des}
                       onChange={(e) => setDes(e.target.value)}
+<<<<<<< HEAD
                       placeholder="Description"
+=======
+                      placeholder="Destination"
+>>>>>>> 5e3d8064697891f378f30c7f12d715a77b55e8a2
                     />
                   </div>
                 </div>
