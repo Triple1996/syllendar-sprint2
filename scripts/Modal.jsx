@@ -47,7 +47,7 @@ export default function Modal({ isShowing, hide, date }) {
   if (isShowing) {
     return (
       ReactDOM.createPortal(
-        <>
+        <div>
           <div className="modal-overlay" />
           <div className="modal-wrapper" aria-modal aria-hidden tabIndex={-1} role="dialog">
             <div className="modal">
@@ -136,7 +136,7 @@ export default function Modal({ isShowing, hide, date }) {
               </div>
             </div>
           </div>
-        </>, document.body,
+        </div>, document.body,
       )
     );
   }
