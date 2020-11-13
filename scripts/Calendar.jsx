@@ -6,15 +6,6 @@ export default function Calendar() {
   const {isShowing, toggle} = useModal();
   const [date, setDate] = useState("");
   
-  function daySelected(date) {
-    toggle();
-    setDate(date);
-    if (date == null) {
-      return;
-    }
-    return <button id="dayEvent"></button>;
-  }
-  
   let y = [];
   let currentTime = new Date();
   let currentDate = currentTime.getDate();
@@ -55,6 +46,25 @@ export default function Calendar() {
   while (x !== monthMax + 1) {
     y[x] = x;
     x++;
+  }
+  
+  function daySelected(day) {
+    
+    //TODO - Logic for figureing out what the date is accoridng the number they chose. I will start
+    //this object can contain the email that we get from the google login. we need to avoid the user to input
+    //so much information
+    let obj = {
+      'month': currentMonth,
+      'day' : day,
+      'year': year
+    }
+    
+    setDate(obj);
+    toggle();
+    if (day == null) {
+      return;
+    }
+    return <button id="dayEvent"></button>;
   }
 
   return (
