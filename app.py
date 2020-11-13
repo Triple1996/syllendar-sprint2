@@ -98,11 +98,14 @@ def add_event(data):
 
     print("adding new event!")
 
-    #TODO - figure out how to check if the event exists. Needs update functions if it's the same event
+    # Add to database if event does not exist
+    if (db.session.query(exists().where(Events.event_start_time == starttm and Events.event_start_date == startdt and Events.name == name)).scalar()) != True:
+        db.session.add(Events(name, email, title, startdt, starttm, enddt, endtm, location, des ))
+        db.session.commit()
 
-    db.session.add(Events(name, email, title, startdt, starttm, enddt, endtm, location, des ))
-    db.session.commit()
 
+    #TODO update event - idea: if already exists, delete event and rewrite with new info
+    
     print("Added to the db")
 
 @socketio.on('new login') # image, email, name
@@ -111,7 +114,7 @@ def new_login(data):
     fullname = (data['name'])
     email = (data['email'])
 
-    # TODO - Add to database if user does not exist
+    # Add to database if user does not exist
     if (db.session.query(exists().where(Users.email == email)).scalar()) != True:
         db.session.add(Users(fullname, email, imageLink))
         db.session.commit()
