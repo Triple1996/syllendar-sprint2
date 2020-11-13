@@ -4,10 +4,17 @@ import { Socket } from './Socket';
 
 export default function Modal({isShowing, hide, date}) {
   
+  //TODO - Figure out which one we need from the user, which one we can generate with the info of the date selected
+  //example of how to access the day
+  console.log(date.day) //this will print out the number of which of the boxes in the calendar component got selected.
+  //we can create the date something like this
+  let startdt = date.month + "/" + date.day + "/" + date.year
+  //then we can pass this as the startdate and remove the whole startdt useState hook, I will comment it out . 
+  
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [title, setTitle] = useState("");
-  const [startdt, setStartdt] = useState("");
+  //const [startdt, setStartdt] = useState("");
   const [starttm, setStarttm] = useState("");
   const [enddt, setEnddt] = useState("");
   const [endtm, setEndtm] = useState("");
@@ -26,6 +33,15 @@ export default function Modal({isShowing, hide, date}) {
       'location': location,
       'des': des
     })
+    
+    setName("")
+    setEmail("")
+    setTitle("")
+    setStarttm("")
+    setEnddt("")
+    setEndtm("")
+    location("")
+    setDes("")
   }
   
   if (isShowing) {
@@ -65,14 +81,6 @@ export default function Modal({isShowing, hide, date}) {
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
                       placeholder="Title"
-                    />
-                  </div>
-                  <div className="col-10 text-center">
-                    <input 
-                      className="form-group"
-                      value={startdt}
-                      onChange={(e) => setStartdt(e.target.value)}
-                      placeholder="Start Date"
                     />
                   </div>
                   <div className="col-10 text-center">
