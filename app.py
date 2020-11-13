@@ -17,7 +17,7 @@ import flask
 import flask_sqlalchemy
 from sqlalchemy.sql import exists
 import flask_socketio
-# import models
+
 
 app = flask.Flask(__name__)
 
@@ -35,47 +35,7 @@ db = flask_sqlalchemy.SQLAlchemy(app)
 db.init_app(app)
 db.app = app
 
-class Users(db.Model):
-    # id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120))
-    email = db.Column(db.String(120), primary_key=True, unique=True)
-    imageurl = db.Column(db.String(500))
-
-    def __init__(self, a, b, c):
-        self.name = a
-        self.email = b
-        self.imageurl = c
-
-    def __repr__(self):
-        return '<name: {}, email: {}>'.format(self.name, self.email)
-
-class Events(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120))
-    email = db.Column(db.String(120))
-    event_title = db.Column(db.String(120))
-    event_start_date = db.Column(db.String(50), nullable = False)
-    event_start_time = db.Column(db.String(50), nullable = False)
-    event_end_date = db.Column(db.String(50), nullable = False)
-    event_end_time = db.Column(db.String(50), nullable = False)
-    location = db.Column(db.String(120))
-    description = db.Column(db.String(1000))
-
-    def __init__(self, name, email, title, startdt, starttm, enddt, endtm, location, des):
-        self.name = name
-        self.email = email
-        self.event_title = title
-        self.event_start_date = startdt
-        self.event_start_time = starttm
-        self.event_end_date = enddt
-        self.event_end_time = endtm
-        self.location = location
-        self.description = des
-
-    def __repr__(self):
-        return '<name: {}, event: {}>, start_date: {}, start_time: {}, end_time: {}'\
-        .format(self.name, self.event_title, self.event_start_date, \
-        self.event_start_time, self.event_end_time)
+import models
 
 db.create_all()
 db.session.commit()
@@ -99,8 +59,8 @@ def add_event(data):
     print("adding new event!")
 
     # Add to database if event does not exist
-    if (db.session.query(exists().where(Events.event_start_time == starttm and Events.event_start_date == startdt and Events.name == name)).scalar()) != True:
-        db.session.add(Events(name, email, title, startdt, starttm, enddt, endtm, location, des ))
+    if (db.session.query(exists().where(models.Events.event_start_time == starttm and models.Events.event_start_date == startdt and models.Events.name == name)).scalar()) != True:
+        db.session.add(models.Events(name, email, title, startdt, starttm, enddt, endtm, location, des ))
         db.session.commit()
 
 
@@ -115,8 +75,8 @@ def new_login(data):
     email = (data['email'])
 
     # Add to database if user does not exist
-    if (db.session.query(exists().where(Users.email == email)).scalar()) != True:
-        db.session.add(Users(name, email, imageLink))
+    if (db.session.query(exists().where(models.Users.email == email)).scalar()) != True:
+        db.session.add(models.Users(name, email, imageLink))
         db.session.commit()
 
     socketio.emit('userinfo', {
