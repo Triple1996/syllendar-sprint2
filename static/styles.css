@@ -32,6 +32,10 @@ img {
   border-radius: 50%;
 }
 
+h2{
+  text-align: center;
+}
+
 .Calendar {
   font-family: sans-serif;
   text-align: center;
@@ -54,7 +58,7 @@ img {
 }
 #dayEvent {
   margin-top: 20px;
-  margin-left: 28px;
+  margin-left: 45px;
   height: 20px;
   background-color: lightblue;
 }
@@ -64,7 +68,7 @@ img {
 }
 
 #dateBox {
-  width: 100px;
+  width: 129px;
   height: 100px;
   padding: 10px;
   margin-bottom: 10px;
@@ -148,3 +152,11 @@ button {
   background: #247BA0;
   color: #fff;
 }
+
+.Syllendar{
+  position: static;
+  top: 0;
+  left: 0;
+  width:80%;
+}
+  
