@@ -48,7 +48,7 @@ export function Content_main () {
 
     return (
         <div>
-        <h1>My Calendar</h1>
+        <h2>My Calendar</h2>
         <Calendar />
         <div className="info">
         <img src={image} width="90" height="90"/>

@@ -70,9 +70,9 @@ export default function Calendar() {
   return (
     <div className="Syllendar">
       <div className="month">
-        <h1>
+        <h3>
           {calMonth} {currentYear}
-        </h1>
+        </h3>
       </div>
       <div className="week">
         <div className="center">Sun</div>
