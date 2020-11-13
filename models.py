@@ -4,6 +4,10 @@
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-instance-attributes
 # pylint: disable=too-few-public-methods
+# pylint: disable=no-member
+# pylint: disable=unused-import
+# pylint: disable=fixme
+
 from datetime import datetime
 import flask_sqlalchemy
 from app import db
