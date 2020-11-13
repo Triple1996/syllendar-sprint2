@@ -8,13 +8,13 @@ export default function Modal({isShowing, hide, date}) {
   //example of how to access the day
   console.log(date.day) //this will print out the number of which of the boxes in the calendar component got selected.
   //we can create the date something like this
-  let startdt = date.month + "/" + date.day + "/" + date.year
+  let currentDate = date.month + "/" + date.day + "/" + date.year;
   //then we can pass this as the startdate and remove the whole startdt useState hook, I will comment it out . 
   
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [title, setTitle] = useState("");
-  //const [startdt, setStartdt] = useState("");
+  const [startdt, setStartdt] = useState("");
   const [starttm, setStarttm] = useState("");
   const [enddt, setEnddt] = useState("");
   const [endtm, setEndtm] = useState("");
@@ -40,7 +40,7 @@ export default function Modal({isShowing, hide, date}) {
     setStarttm("")
     setEnddt("")
     setEndtm("")
-    location("")
+    setLocation("")
     setDes("")
   }
   
@@ -94,6 +94,14 @@ export default function Modal({isShowing, hide, date}) {
                   <div className="col-10 text-center">
                     <input 
                       className="form-group"
+                      value={currentDate}
+                      onChange={(e) => setStartdt(e.target.value)}
+                      placeholder="Start Date"
+                    />
+                  </div>
+                  <div className="col-10 text-center">
+                    <input 
+                      className="form-group"
                       value={enddt}
                       onChange={(e) => setEnddt(e.target.value)}
                       placeholder="End Date"
@@ -120,7 +128,7 @@ export default function Modal({isShowing, hide, date}) {
                       className="form-group"
                       value={des}
                       onChange={(e) => setDes(e.target.value)}
-                      placeholder="Destination"
+                      placeholder="Description"
                     />
                   </div>
                 </div>
