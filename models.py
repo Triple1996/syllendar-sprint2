@@ -10,7 +10,7 @@ Defines DB tables schema for the Syllendar app
 # pylint: disable=no-member
 # pylint: disable=unused-import
 # pylint: disable=fixme
-# pylint: disable=bad-continuation
+# pylint: disable=bad-option-value
 
 
 from datetime import datetime

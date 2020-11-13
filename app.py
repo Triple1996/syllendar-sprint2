@@ -14,8 +14,8 @@ Main backend codebase for Syllendar app
 # pylint: disable=fixme
 # pylint: disable=invalid-envvar-default
 # pylint: disable=wrong-import-position
-# pylint: disable=bad-continuation
-
+# pylint: disable=bad-option-value
+# pylint: disable=fatal
 
 import os
 from os.path import join, dirname
