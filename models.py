@@ -1,7 +1,12 @@
 # models.py
+# pylint: disable=missing-class-docstring
+# pylint: disable=missing-module-docstring
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-instance-attributes
+# pylint: disable=too-few-public-methods
+from datetime import datetime
 import flask_sqlalchemy
 from app import db
-from datetime import datetime
 
 # TODO Add tables
 
@@ -10,12 +15,12 @@ class Users(db.Model):
     name = db.Column(db.String(120))
     email = db.Column(db.String(120), primary_key=True, unique=True)
     imageurl = db.Column(db.String(500))
-    
+
     def __init__(self, a, b, c):
         self.name = a
         self.email = b
         self.imageurl = c
-        
+
     def __repr__(self):
         return '<name: {}, email: {}>'.format(self.name, self.email)
 
@@ -30,7 +35,7 @@ class Events(db.Model):
     event_end_time = db.Column(db.String(50), nullable = False)
     location = db.Column(db.String(120))
     description = db.Column(db.String(1000))
-    
+
     def __init__(self, name, email, title, startdt, starttm, enddt, endtm, location, des):
         self.name = name
         self.email = email
@@ -41,6 +46,8 @@ class Events(db.Model):
         self.event_end_time = endtm
         self.location = location
         self.description = des
-        
+
     def __repr__(self):
-        return '<name: {}, event: {}>, start_date: {}, start_time: {}, end_time: {}'.format(self.name, self.event_title, self.event_start_date, self.event_start_time, self.event_end_time)
+        return '<name: {}, event: {}>, start_date: {}, start_time: {}, end_time: {}'\
+        .format(self.name, self.event_title, self.event_start_date, \
+        self.event_start_time, self.event_end_time)
