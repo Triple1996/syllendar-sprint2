@@ -71,6 +71,27 @@ db.session.commit()
 # db.session.add(Events('First Last','mail@domain.com','Test Event', '01/29/20', '14:32:00', '01/29/20', '15:32:00', 'N/A', 'N/A' ))
 # db.session.commit()
 
+@socketio.on('add event')
+def add_event(data):
+    name = data['name']
+    email = data['email']
+    title = data['title']
+    startdt = data['startdt']
+    starttm = data['starttm']
+    enddt = data['enddt']
+    endtm = data['endtm']
+    location = data['location']
+    des = data['des']
+    
+    print("adding new event!")
+    
+    #TODO - figure out how to check if the event exists. Needs update functions if it's the same event
+    
+    db.session.add(Events(name, email, title, startdt, starttm, enddt, endtm, location, des ))
+    db.session.commit()
+    
+    print("Added to the db")
+    
 @socketio.on('new login') # image, email, name
 def new_login(data):
     imageLink=(data['image'])
