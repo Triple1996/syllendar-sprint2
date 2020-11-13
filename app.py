@@ -111,35 +111,22 @@ def add_event(data):
 @socketio.on('new login') # image, email, name
 def new_login(data):
     imageLink=(data['image'])
-    fullname = (data['name'])
+    name = (data['name'])
     email = (data['email'])
 
     # Add to database if user does not exist
     if (db.session.query(exists().where(Users.email == email)).scalar()) != True:
-        db.session.add(Users(fullname, email, imageLink))
+        db.session.add(Users(name, email, imageLink))
         db.session.commit()
 
-@socketio.on('new image')
-def new_image(data):
-    imageLink=(data['image'])
-    socketio.emit('imageLinks', {
-        'image': imageLink
+    socketio.emit('userinfo', {
+        'image': imageLink,
+        'email': email,
+        'name': name
     })
 
-@socketio.on('new email')
-def new_email(data):
-    emailAddress=(data['email'])
-    socketio.emit('emailAddress', {
-        'email': emailAddress
-    })
-
-@socketio.on('new name')
-def new_name(data):
-    realName=(data['name'])
-    socketio.emit('realname', {
-        'name': realName
-    })
-
+    # TODO emit_all_events
+    
 @app.route('/')
 def index():
     return flask.render_template("index.html")
