@@ -74,7 +74,7 @@ export default function Calendar() {
         <div className="center">Sat</div>
       </div>
       <div className="day">
-        {i.map((day, index) => (
+        {y.map((day, index) => (
           <div id="dateBox" key={index}>
             <div>{day}</div>
             <button id="dayEvent" onClick={() => daySelected(day)}></button>
