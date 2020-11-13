@@ -2,8 +2,6 @@ import * as React from 'react';
 import { GoogleButton } from './GoogleButton';
 import { Socket } from './Socket';
 
-
-
 export function Content() {
     return (
          <div className="container">
