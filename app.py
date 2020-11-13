@@ -18,7 +18,6 @@ import flask_sqlalchemy
 from sqlalchemy.sql import exists
 import flask_socketio
 
-
 app = flask.Flask(__name__)
 
 socketio = flask_socketio.SocketIO(app)
@@ -61,6 +60,7 @@ def add_event(data):
     # Add to database if event does not exist
     if (db.session.query(exists().where(models.Events.event_start_time == starttm and models.Events.event_start_date == startdt and models.Events.name == name)).scalar()) != True:
         db.session.add(models.Events(name, email, title, startdt, starttm, enddt, endtm, location, des ))
+
         db.session.commit()
 
 
@@ -77,6 +77,7 @@ def new_login(data):
     # Add to database if user does not exist
     if (db.session.query(exists().where(models.Users.email == email)).scalar()) != True:
         db.session.add(models.Users(name, email, imageLink))
+
         db.session.commit()
 
     socketio.emit('userinfo', {
