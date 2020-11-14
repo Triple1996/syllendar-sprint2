@@ -75,10 +75,10 @@ Be able to log in, view calendar,and should be able to add events
 
 5. Brijesh
 
-    a) Implement Google OAut
-    b) Pulled the information like name, email, and profile picture from the Google OAuth
-    c) Added Sign out Button
-    d) Linting
+    - Implement Google OAuth
+    - Pulled the information like name, email, and profile picture from the Google OAuth
+    -  Added Sign out Button
+    -  Linting
       - minor Pylinting
       - majority of eslint
 
