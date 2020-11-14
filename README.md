@@ -59,6 +59,7 @@ If that doesn't work: `sudo vim $(psql -c "show hba_file;" | grep pg_hba.conf)`
 Be able to log in, view calendar,and should be able to add events
 1. Adam
   - Make repo, set up boilerplate, research and implement Calendar API
+  - Heroku deployment
 
 2. Saksham
   - Set up the database tables
