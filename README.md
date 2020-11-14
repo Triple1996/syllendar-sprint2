@@ -54,3 +54,22 @@ If that doesn't work: `sudo vim $(psql -c "show hba_file;" | grep pg_hba.conf)`
   a) `npm run watch`. If prompted to install webpack-cli, type "yes"    
   b) In a new terminal, `python app.py`    
   c) Preview Running Application (might have to clear your cache by doing a hard refresh)    
+  
+# Individual Contribution
+Be able to log in, view calendar,and should be able to add events
+1. Adam
+Make repo, set up boilerplate, research and implement Calendar API
+2. Saksham
+Set up the database tables
+3. Sam
+Implement calendar front end
+4. Ray
+Implement calendar front end
+5. Brijesh
+  a) Implement Google OAuth
+  b) Pulled the information like name, email, and profile picture from the Google OAuth
+  c) Added Sign out Button
+  d) Linting
+  - minor Pylinting
+  - majority of eslint
+
