@@ -60,20 +60,25 @@ Be able to log in, view calendar,and should be able to add events
 1. Adam
 
   Make repo, set up boilerplate, research and implement Calendar API
+
 2. Saksham
   
   Set up the database tables
+
 3. Sam
 
   Implement calendar front end
+
 4. Ray
   
   Implement calendar front end
+
 5. Brijesh
-  a) Implement Google OAuth
-  b) Pulled the information like name, email, and profile picture from the Google OAuth
-  c) Added Sign out Button
-  d) Linting
-  - minor Pylinting
-  - majority of eslint
+
+    a) Implement Google OAut
+    b) Pulled the information like name, email, and profile picture from the Google OAuth
+    c) Added Sign out Button
+    d) Linting
+      - minor Pylinting
+      - majority of eslint
 
