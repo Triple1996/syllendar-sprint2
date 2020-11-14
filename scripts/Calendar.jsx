@@ -48,7 +48,7 @@ export default function Calendar() {
     y.push(32);
   }
 
-  for (var x = 1; x !== monthMax; x++) {
+  for (var x = 1; x !== monthMax + 1; x++) {
     y[x + fifthPart - 1] = x;
   }
   for (x = 0; x < 7; x++) {
