@@ -70,10 +70,10 @@ Be able to log in, view calendar,and should be able to add events
   - Implement calendar front end
 
 5. Brijesh
-    - Implement Google OAuth
-    - Pulled the information like name, email, and profile picture from the Google OAuth
-    -  Added Sign out Button
-    -  Linting
-          - minor Pylinting
-          - majority of eslint
+  - Implement Google OAuth
+  - Pulled the information like name, email, and profile picture from the Google OAuth
+  - Added Sign out Button
+  - Linting
+        - minor Pylinting
+        - majority of eslint
 
