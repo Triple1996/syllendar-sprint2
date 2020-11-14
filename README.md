@@ -58,13 +58,17 @@ If that doesn't work: `sudo vim $(psql -c "show hba_file;" | grep pg_hba.conf)`
 # Individual Contribution
 Be able to log in, view calendar,and should be able to add events
 1. Adam
-Make repo, set up boilerplate, research and implement Calendar API
+
+  Make repo, set up boilerplate, research and implement Calendar API
 2. Saksham
-Set up the database tables
+  
+  Set up the database tables
 3. Sam
-Implement calendar front end
+
+  Implement calendar front end
 4. Ray
-Implement calendar front end
+  
+  Implement calendar front end
 5. Brijesh
   a) Implement Google OAuth
   b) Pulled the information like name, email, and profile picture from the Google OAuth
