@@ -86,7 +86,7 @@ If that doesn't work: `sudo vim $(psql -c "show hba_file;" | grep pg_hba.conf)`
 12. Navigate to your new heroku site
 
 # Individual Contribution
-Be able to log in, view calendar,and should be able to add events
+
 1. Adam
 
 2. Saksham
