@@ -78,4 +78,3 @@ Be able to log in, view calendar,and should be able to add events
           - minor Pylinting
           - majority of eslint
 
-
