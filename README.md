@@ -84,7 +84,6 @@ If that doesn't work: `sudo vim $(psql -c "show hba_file;" | grep pg_hba.conf)`
 11. Finally, push your app up to heroku with `git push heroku master`
 
 12. Navigate to your new heroku site
-  ## Make sure the url says https:// and you see a secured connection, otherwise list items may load in reverse
 
 # Individual Contribution
 Be able to log in, view calendar,and should be able to add events
