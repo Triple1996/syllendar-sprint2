@@ -1,4 +1,4 @@
-# Link: https://syllendar.herokuapp.com/
+# Link: https://syllendar-sprint2.herokuapp.com/
 
 # Set up React  
 0. `cd ~/environment && git clone https://github.com/Triple1996/syllendar/ && cd syllendar`    
@@ -55,26 +55,47 @@ If that doesn't work: `sudo vim $(psql -c "show hba_file;" | grep pg_hba.conf)`
   b) In a new terminal, `python app.py`    
   c) Preview Running Application (might have to clear your cache by doing a hard refresh)    
   
+
+# Pushing to Heroku
+1. If you want to deploy this app onto Heroku, you must first register for an account at: https://signup.heroku.com/login
+2. Install heroku CLI by running `npm install -g heroku`
+3. Log-in to heroku: `heroku login -i`
+4. Create new heroku app:  `heroku create`
+5. Create a DB on heroku: `heroku addons:create heroku-postgresql:hobby-dev`
+6. Run `heroku pg:wait`
+7. Make sure we are the owner of our DB
+
+    a) `psql`    
+    
+    b) `ALTER DATABASE postgres OWNER TO [user_name_from_7b];`  
+    
+    c) `\du` Check that you user is listed and has attributes: `Superuser,Create role, Create DB, Replication`
+    
+    d) `\l` Check that your database "postgres" has your user listed as the owner
+    
+    **If you are missing a role, you can add it with `ALTER ROLE [user_name_from_7b] WITH [CREATEROLE\CREATEDB\REPLICATION]`**
+
+8. Push our db to heroku: `PGUSER=[user_name_from_7b] heroku pg:push postgres DATABASE_URL` If this returns "pg_restore errored with 1", that's okay!
+
+    a) If you are getting an error "peer authentication failed for user", try running just`heroku pg:push postgres DATABASE_URL`
+  
+9. Configure Procfile with command needed to run your app (for this repo it is `web: python app.py`)
+10. Configure requirements.txt with all requirements needed to run your app (for this repo it is filled in using `pip freeze > requirements.txt`
+11. Finally, push your app up to heroku with `git push heroku master`
+
+12. Navigate to your new heroku site
+  ## Make sure the url says https:// and you see a secured connection, otherwise list items may load in reverse
+
 # Individual Contribution
 Be able to log in, view calendar,and should be able to add events
 1. Adam
-  - Make repo, set up boilerplate, research and implement Calendar API
-  - Heroku deployment
 
 2. Saksham
-  - Set up the database tables
 
 3. Sam
-  - Implement calendar front end
 
 4. Ray
-  - Implement calendar front end
 
 5. Brijesh
-  - Implement Google OAuth
-  - Pulled the information like name, email, and profile picture from the Google OAuth
-  - Added Sign out Button
-  - Linting
-          - minor Pylinting
-          - majority of eslint
+
 
