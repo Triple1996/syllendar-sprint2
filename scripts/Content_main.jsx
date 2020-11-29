@@ -48,14 +48,15 @@ export function Content_main() {
             var starttm;
             var enddt;
             var endtm;
-            var location;
-            var des;
+            let location = (event.location ? event.location : "N/A");
+            let des = (event.description ? event.description : "N/A");
+
                         
             if (event.start.date){  // If all day event
               startdt = event.start.date
-              starttm = "00:00"
+              starttm = "All Day"
               enddt = event.end.date
-              endtm = "23:59"
+              endtm = "All Day"
               
             }
             else{ // Not all day event
@@ -64,21 +65,7 @@ export function Content_main() {
               enddt = event.start.dateTime;
               endtm = event.start.dateTime;
             }
-            
-            if (event.location){
-              location = event.location;
-            }        
-            else {
-              location = "N/A";
-            }
-            
-            if (event.description){
-              des = event.description;
-            }
-            else {
-              des = "N/A";
-            }
-            
+
             let createdBy = event.creator.email;
             let id = event.id;
 
