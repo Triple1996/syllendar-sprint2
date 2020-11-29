@@ -36,36 +36,77 @@ export function Content_main() {
     
   function loadevents(){
     if (ApiCalendar.sign){
-        ApiCalendar.listUpcomingEvents()
+        ApiCalendar.listUpcomingEvents(25)
       .then(
         ({result}) => {
                             
           for (var i = 0; i < result.items.length; i++){
             let event = result.items[i]
+            
+            var title = event.summary;
+            var startdt;
+            var starttm;
+            var enddt;
+            var endtm;
+            var location;
+            var des;
                         
-            var start;
-            var end;
-                        
-            if (event.start.date){
-              start = "All day"
-              end = "All day"
+            if (event.start.date){  // If all day event
+              startdt = event.start.date
+              starttm = "00:00"
+              enddt = event.end.date
+              endtm = "23:59"
+              
             }
-            else{
-              start = event.start.dateTime;
-              end = event.start.dateTime;
+            else{ // Not all day event
+              startdt = event.start.dateTime;
+              starttm = event.start.dateTime;
+              enddt = event.start.dateTime;
+              endtm = event.start.dateTime;
             }
-                        
+            
+            if (event.location){
+              location = event.location;
+            }        
+            else {
+              location = "N/A";
+            }
+            
+            if (event.description){
+              des = event.description;
+            }
+            else {
+              des = "N/A";
+            }
+            
             let createdBy = event.creator.email;
             let id = event.id;
-            let summary = event.summary;
-                        
-            var element = document.createElement("li");
-            var text = document.createTextNode(
-              "created by: " + createdBy + "\n"+
-              "start: "+ start+ "\n"+  // undefined if "All day"
-              "end: "+ end+ "\n"+      // undefined if "All day"
-              "summary: "+ summary);
+
+            var text = (
+              "name: " + name + "\n"+
+              "email: " + createdBy + "\n"+
+              `title: ${title}` + "\n"+
+              `startdt: ${startdt}`+ "\n"+
+              `starttm: ${starttm}`+ "\n"+
+              `enddt: ${enddt}`+ "\n"+
+              `endtm: ${endtm}`+ "\n"+
+              `location: ${location}`+ "\n"+
+              `des: ${des}`+ "\n");
+           
             console.log(text);
+            
+            // Socket.emit('add event', {
+            //   name, 
+            //   email: createdBy,
+            //   title: summary,
+            //   startdt,
+            //   starttm,
+            //   enddt,
+            //   endtm,
+            //   location,
+            //   des
+              
+            // });
           }
           
         });
