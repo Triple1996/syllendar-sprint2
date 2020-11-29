@@ -54,9 +54,9 @@ export function Content_main() {
                         
             if (event.start.date){  // If all day event
               startdt = event.start.date
-              starttm = "All Day"
+              starttm = "00:00"
               enddt = event.end.date
-              endtm = "All Day"
+              endtm = "00:00"
               
             }
             else{ // Not all day event
