@@ -59,13 +59,13 @@ If that doesn't work: `sudo vim $(psql -c "show hba_file;" | grep pg_hba.conf)`
   
 
 # Pushing to Heroku
-1. If you want to deploy this app onto Heroku, you must first register for an account at: https://signup.heroku.com/login
-2. Install heroku CLI by running `npm install -g heroku`
-3. Log-in to heroku: `heroku login -i`
-4. Create new heroku app:  `heroku create`
-5. Create a DB on heroku: `heroku addons:create heroku-postgresql:hobby-dev`
-6. Run `heroku pg:wait`
-7. Make sure we are the owner of our DB
+1. If you want to deploy this app onto Heroku, you must first register for an account at: https://signup.heroku.com/login   
+2. Install heroku CLI by running `npm install -g heroku`    
+3. Log-in to heroku: `heroku login -i`    
+4. Create new heroku app:  `heroku create`    
+5. Create a DB on heroku: `heroku addons:create heroku-postgresql:hobby-dev`    
+6. Run `heroku pg:wait`   
+7. Make sure we are the owner of our DB   
     a) `psql`    
     b) `ALTER DATABASE postgres OWNER TO [user_name_from_7b];`  
     c) `\du` Check that you user is listed and has attributes: `Superuser,Create role, Create DB, Replication`    
