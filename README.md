@@ -12,7 +12,8 @@
   f) `npm install socket.io-client --save`    
   g) `npm install react-google-login`   
   e) `npm install --save react-google-calendar-api`   
-      i) `To get react-google-calendar working, you must create a file apiGoogleconfig.json in the root directory and add a googleApi clientID and ApiKeym, as well as specify the scope and discoveryDocs. See https://www.npmjs.com/package/react-google-calendar-api for more details.`    
+  
+To get react-google-calendar working, you must create a file apiGoogleconfig.json in the root directory and add a googleApi clientID and ApiKeym, as well as        specify the scope and discoveryDocs. See https://www.npmjs.com/package/react-google-calendar-api for more details.    
     
 If you see any error messages, make sure you use `sudo pip` or `sudo npm`. If it says "pip cannot be found", run `which pip` and use `sudo [path to pip from which pip] install`  
   
