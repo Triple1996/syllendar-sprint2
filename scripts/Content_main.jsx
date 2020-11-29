@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Socket } from './Socket';
+import { Content } from './Content';
 import Calendar from './Calendar';
 import ApiCalendar from 'react-google-calendar-api';
 
@@ -12,7 +13,7 @@ export function Content_main() {
 
   React.useEffect(() => {
     Socket.on('userinfo', (data) => {
-      console.log(`Received user image from server: ${data.imageLink}`);
+      console.log(`Received user image from server: ${data.image}`);
       setImage(data.image);
       console.log(`Received user email address from server: ${data.email}`);
       setEmail(data.email);
@@ -70,7 +71,7 @@ export function Content_main() {
         
     }
     else {
-      window.alert("Must be logged in");
+      window.alert("Need to authorize Calendar access");
     }
   }
 
