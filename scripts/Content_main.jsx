@@ -13,12 +13,13 @@ export function Content_main() {
 
   React.useEffect(() => {
     Socket.on('userinfo', (data) => {
-      console.log(`Received user image from server: ${data.image}`);
+      // console.log(`Received user image from server: ${data.image}`);
       setImage(data.image);
-      console.log(`Received user email address from server: ${data.email}`);
+      // console.log(`Received user email address from server: ${data.email}`);
       setEmail(data.email);
-      console.log(`Received user name from server: ${data.name}`);
+      // console.log(`Received user name from server: ${data.name}`);
       setName(data.name);
+      console.log(`Logged in with ${data.email}`)
     });
   });
 
