@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import Modal from './Modal';
-import useModal from './useModal';
 
 export default class Calendar extends React.Component {
-  state = {
-    z: [],
-    currentMonth: new Date().getMonth() + 1,
-    currentYear: new Date().getFullYear(),
-    calMonth: new Date().toLocaleString("default", { month: "long" }),
-    actualYear: new Date().getFullYear()
-  };
-
+  constructor () {
+    super();
+    this.state = {
+      z: [],
+      currentMonth: new Date().getMonth() + 1,
+      currentYear: new Date().getFullYear(),
+      calMonth: new Date().toLocaleString("default", { month: "long" }),
+      actualYear: new Date().getFullYear()
+    }
+  }
+  
   makeCalendar() {
     // TODO: Read from socket? then
     let y = [];
@@ -189,72 +190,7 @@ export default class Calendar extends React.Component {
             </div>
           ))}
         </div>
-        {/* <div className=""calendar>{renderCalendar()}</div> */}
-        {/* TODO -- Add Event Button or some other functionality */}
       </div>
     );
   }
 }
-
-/*
-
-  MODAL LEFTOVERS
-  
-  const { isShowing, toggle } = useModal();
-  const [date, setDate] = useState('');
-
-  function daySelected(day) {
-    // TODO - Logic for figureing out what the date is accoridng the number they chose. I will start
-    // this object can contain the email that we get from the google login. we need to avoid the user to input
-    // so much information
-    const obj = {
-      month: currentMonth,
-      day,
-      year,
-    };
-
-    setDate(obj);
-    toggle();
-    if (day == null) {
-      return;
-    }
-    return <button id="dayEvent" />;
-  }
-
-  return (
-    <div className="Syllendar">
-      <div className="month">
-        <h3>
-          {calMonth}
-          {' '}
-          {currentYear}
-        </h3>
-      </div>
-      <div className="week">
-        <div className="center">Sun</div>
-        <div className="center">Mon</div>
-        <div className="center">Tues</div>
-        <div className="center">Wed</div>
-        <div className="center">Thurs</div>
-        <div className="center">Fri</div>
-        <div className="center">Sat</div>
-      </div>
-      <div className="day">
-        {y.map((day, index) => (
-          <div id="dateBox" key={index}>
-            <div>{day}</div>
-            <button id="dayEvent" onClick={() => daySelected(day)} />
-          </div>
-        ))}
-      </div>
-      <div className="app">
-        <Modal
-          isShowing={isShowing}
-          hide={toggle}
-          date={date}
-        />
-      </div>
-    </div>
-  );
-}
-*/
