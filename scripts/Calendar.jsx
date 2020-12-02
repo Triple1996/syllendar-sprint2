@@ -60,7 +60,6 @@ export default class Calendar extends React.Component {
       }
     }
 
-    console.log(y);
     this.setState({ z: y });
   }
 

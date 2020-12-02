@@ -45,6 +45,11 @@ h2{
   display: grid;
   grid-template-columns: repeat(7, 1fr);
 }
+
+.dayBlock {
+
+}
+
 .week > * {
   font-weight: bold;
   border: 2px solid black;
