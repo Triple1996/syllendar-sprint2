@@ -53,17 +53,20 @@ export function Content_main() {
 
                         
             if (event.start.date){  // If all day event
-              startdt = event.start.date
+              startdt = event.start.date.split("-").reverse().join("-");
               starttm = "00:00"
-              enddt = event.end.date
+              enddt = event.end.date.split("-").reverse().join("-");
               endtm = "00:00"
               
             }
             else{ // Not all day event
-              startdt = event.start.dateTime;
-              starttm = event.start.dateTime;
-              enddt = event.start.dateTime;
-              endtm = event.start.dateTime;
+              // take datetime object convert to time and date
+              let rawStartDateTimeSplit = event.start.dateTime.split("M").join(",").split("T").join(",").split("W").join(",").split("F").join(",").split("S").join(",").split(",");
+              let rawEndDateTimeSplit = event.end.dateTime.split("M").join(",").split("T").join(",").split("W").join(",").split("F").join(",").split("S").join(",").split(",");
+              startdt = rawStartDateTimeSplit[0].split("-").reverse().join("-");
+              starttm = rawStartDateTimeSplit[1].split("-")[0].substring(0,5);
+              enddt = rawEndDateTimeSplit[0].split("-").reverse().join("-");
+              endtm = rawEndDateTimeSplit[1].split("-")[0].substring(0,5);
             }
 
             let createdBy = event.creator.email;
