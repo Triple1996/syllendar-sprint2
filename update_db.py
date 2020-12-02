@@ -74,23 +74,26 @@ import models
 db.create_all()
 db.session.commit()
 
-        
+import time
+
 # IF IMPORTANT FLAG = TRUE, COPY EVENT TO IMPORTANT EVENTS TABLE 
-for db_event in db.session.query(models.Events).all():
-    if db_event.imp_flag == 'True':
-        # IF EXISTS, DO NOT ADD AGAIN!
-        if (db.session.query(exists().where(
-                models.ImportantEvents.event_start_time == db_event.event_start_time
-                and models.ImportantEvents.event_start_date == db_event.event_start_date
-                and models.ImportantEvents.event_title == db_event.event_title
-                and models.ImportantEvents.name == db_event.name
-                and models.ImportantEvents.email == db_event.email
-            )
-        ).scalar()) != True:
-            db.session.add(
-                models.ImportantEvents(
-                    db_event.name, db_event.email, db_event.event_title, db_event.event_start_date, db_event.event_start_time, db_event.contact_number, 'False'
+while True:
+    for db_event in db.session.query(models.Events).all():
+        if db_event.imp_flag == 'True':
+            # IF EXISTS, DO NOT ADD AGAIN!
+            if (db.session.query(exists().where(
+                    models.ImportantEvents.event_start_time == db_event.event_start_time
+                    and models.ImportantEvents.event_start_date == db_event.event_start_date
+                    and models.ImportantEvents.event_title == db_event.event_title
+                    and models.ImportantEvents.name == db_event.name
+                    and models.ImportantEvents.email == db_event.email
                 )
-            )
-            db.session.commit()
+            ).scalar()) != True:
+                db.session.add(
+                    models.ImportantEvents(
+                        db_event.name, db_event.email, db_event.event_title, db_event.event_start_date, db_event.event_start_time, db_event.contact_number, 'False'
+                    )
+                )
+                db.session.commit()
+    time.sleep(61) 
     

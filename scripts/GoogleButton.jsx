@@ -17,9 +17,9 @@ function responseGoogle(response) {
   });
 
   console.log('Sent the user data to the server!');
-  console.log(`Sent the image link ${url} to the server!`);
-  console.log(`Sent the email address ${email} to the server!`);
-  console.log(`Sent the name ${name} to the server!`);
+  // console.log(`Sent the image link ${url} to the server!`);
+  // console.log(`Sent the email address ${email} to the server!`);
+  // console.log(`Sent the name ${name} to the server!`);
 
   ReactDOM.render(<Content_main />, document.getElementById('content'));
 }

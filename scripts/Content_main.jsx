@@ -1,7 +1,10 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Socket } from './Socket';
+import { Content } from './Content';
 import Calendar from './Calendar';
+import ApiCalendar from 'react-google-calendar-api';
+
 
 export function Content_main() {
   const [image, setImage] = React.useState([]);
@@ -10,19 +13,115 @@ export function Content_main() {
 
   React.useEffect(() => {
     Socket.on('userinfo', (data) => {
-      console.log(`Received user image from server: ${data.imageLink}`);
+      // console.log(`Received user image from server: ${data.image}`);
       setImage(data.image);
-      console.log(`Received user email address from server: ${data.email}`);
+      // console.log(`Received user email address from server: ${data.email}`);
       setEmail(data.email);
-      console.log(`Received user name from server: ${data.name}`);
+      // console.log(`Received user name from server: ${data.name}`);
       setName(data.name);
+      console.log(`Logged in with ${data.email}`)
     });
   });
 
   function handleSubmit(event) {
+    ApiCalendar.handleSignoutClick();
     ReactDOM.render(<Content />, document.getElementById('content'));
   }
+  
+  function authenticate(response){
+        ApiCalendar.handleAuthClick();
+        console.log(response);
+        console.log("Logged in");
+  }
+    
+  function loadevents(){
+    if (ApiCalendar.sign){
+        ApiCalendar.listUpcomingEvents(25)
+      .then(
+        ({result}) => {
+                            
+          for (var i = 0; i < result.items.length; i++){
+            let event = result.items[i]
+            
+            var title = event.summary;
+            var startdt;
+            var starttm;
+            var enddt;
+            var endtm;
+            let location = (event.location ? event.location : "N/A");
+            let des = (event.description ? event.description : "N/A");
 
+                        
+            if (event.start.date){  // If all day event
+              startdt = event.start.date
+              starttm = "00:00"
+              enddt = event.end.date
+              endtm = "00:00"
+              
+            }
+            else{ // Not all day event
+              startdt = event.start.dateTime;
+              starttm = event.start.dateTime;
+              enddt = event.start.dateTime;
+              endtm = event.start.dateTime;
+            }
+
+            let createdBy = event.creator.email;
+            let id = event.id;
+
+            var text = (
+              "name: " + name + "\n"+
+              "email: " + createdBy + "\n"+
+              `title: ${title}` + "\n"+
+              `startdt: ${startdt}`+ "\n"+
+              `starttm: ${starttm}`+ "\n"+
+              `enddt: ${enddt}`+ "\n"+
+              `endtm: ${endtm}`+ "\n"+
+              `location: ${location}`+ "\n"+
+              `des: ${des}`+ "\n");
+           
+            console.log(text);
+            
+            // Socket.emit('add event', {
+            //   name, 
+            //   email: createdBy,
+            //   title: summary,
+            //   startdt,
+            //   starttm,
+            //   enddt,
+            //   endtm,
+            //   location,
+            //   des
+              
+            // });
+          }
+          
+        });
+        
+    }
+    else {
+      window.alert("Need to authorize Calendar access");
+    }
+  }
+  
+  function imports(){
+    var uploadedFile = document.getElementById('uploadedFile').files;
+    if (uploadedFile.length <= 0) {
+      return false;
+    }
+  
+  var readFiles = new FileReader();
+  readFiles.onload = function(e) { 
+    console.log(e);
+    var output = JSON.parse(e.target.result);
+    var format = JSON.stringify(output, null, 2);
+		document.getElementById('result').value = format;
+  }
+  
+  readFiles.readAsText(uploadedFile.item(0));
+    
+  }
+  
   return (
     <div>
       <h2>My Calendar</h2>
@@ -30,8 +129,13 @@ export function Content_main() {
       <div className="info">
         <img src={image} width="90" height="90" />
         <p>{email}</p>
-        <p>{name}</p>
+        <p>{name}</p><br />
+        <input type="file" id="uploadedFile" /><br />
+        <button onClick={imports}>Import</button>
+        <textarea id="result"></textarea>
         <div className="buttonpostion">
+        <button onClick={authenticate}> Auth G Calendar </button>
+          <button onClick={loadevents}> Import from Google Calendar </button>
           <form onSubmit={handleSubmit}>
             <button>Sign Out</button>
           </form>
