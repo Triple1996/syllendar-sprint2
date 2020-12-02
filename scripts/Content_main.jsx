@@ -103,7 +103,24 @@ export function Content_main() {
       window.alert("Need to authorize Calendar access");
     }
   }
-
+  
+  function imports(){
+    var uploadedFile = document.getElementById('uploadedFile').files;
+    if (uploadedFile.length <= 0) {
+      return false;
+    }
+  
+  var readFiles = new FileReader();
+  readFiles.onload = function(e) { 
+    console.log(e);
+    var output = JSON.parse(e.target.result);
+    var format = JSON.stringify(output, null, 2);
+		document.getElementById('result').value = format;
+  }
+  
+  readFiles.readAsText(uploadedFile.item(0));
+    
+  }
   
   return (
     <div>
@@ -112,7 +129,10 @@ export function Content_main() {
       <div className="info">
         <img src={image} width="90" height="90" />
         <p>{email}</p>
-        <p>{name}</p>
+        <p>{name}</p><br />
+        <input type="file" id="uploadedFile" /><br />
+        <button onClick={imports}>Import</button>
+        <textarea id="result"></textarea>
         <div className="buttonpostion">
         <button onClick={authenticate}> Auth G Calendar </button>
           <button onClick={loadevents}> Import from Google Calendar </button>
