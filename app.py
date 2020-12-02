@@ -31,7 +31,7 @@ socketio = flask_socketio.SocketIO(app)
 socketio.init_app(app, cors_allowed_origins="*")
 
 try:
-    DOTENV_PATH = join(dirname(__file__), "sql.env")
+    DOTENV_PATH = join(dirname(__file__), "sql_and_api_keys.env")
     dotenv.load_dotenv(DOTENV_PATH)
 except AttributeError as error: 
     print("Handled error: " + str(error))
@@ -59,7 +59,9 @@ def add_event(data):
     starttm = data["starttm"]
     enddt = data["enddt"]
     endtm = data["endtm"]
+    imp = data["imp"]
     location = data["location"]
+    contact = data["contact"]
     des = data["des"]
 
 
@@ -77,7 +79,7 @@ def add_event(data):
     ) != True:
         db.session.add(
             models.Events(
-                name, email, title, startdt, starttm, enddt, endtm, location, des
+                name, email, title, startdt, starttm, enddt, endtm, imp, 'False', location, contact, des
             )
         )
 
@@ -123,3 +125,4 @@ if __name__ == "__main__":
         port=int(os.getenv("PORT", 8080)),
         debug=True,
     )
+

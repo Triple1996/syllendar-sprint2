@@ -1,5 +1,6 @@
 node_modules/
 package-lock.json
 sql.env
+sql_and_api_keys.env
 apikeys.env
 __pycache__
