@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import CreateEvent from './CreateEvent';
+import { Socket } from './Socket';
 
 export default class Calendar extends React.Component {
   constructor () {
@@ -8,12 +10,12 @@ export default class Calendar extends React.Component {
       currentMonth: new Date().getMonth() + 1,
       currentYear: new Date().getFullYear(),
       calMonth: new Date().toLocaleString("default", { month: "long" }),
-      actualYear: new Date().getFullYear()
+      actualYear: new Date().getFullYear(),
+      events: []
     }
   }
   
-  makeCalendar() {
-    // TODO: Read from socket? then
+  makeCalendar(events = []) {
     let y = [];
     let century = parseFloat(this.state.currentYear.toString().slice(0, 2));
     let year = parseFloat(this.state.currentYear.toString().slice(-2));
@@ -51,15 +53,20 @@ export default class Calendar extends React.Component {
     }
 
     for (var x = 1; x !== monthMax + 1; x++) {
-      y[x + fifthPart - 1] = x;
+      y[x + fifthPart - 1] = {day: x, eventsInDay: []};
+        for (let i = 0; i < events.length; i ++) {
+          if (parseInt(events[i].Day) == x) {
+            y[x + fifthPart - 1].eventsInDay.push(events[i])
+          } 
+        }
     }
 
     for (x = 0; x < 7; x++) {
       if (y[x] === 32) {
-        y[x] = null;
+        y[x] = {day: null, eventsInDay: []}
       }
     }
-
+    
     this.setState({ z: y });
   }
 
@@ -106,7 +113,7 @@ export default class Calendar extends React.Component {
         this.setState({
           calMonth: this.getMonthName(this.state.currentMonth)
         });
-        this.makeCalendar();
+        this.makeCalendar(this.state.events);
       });
     }
   }
@@ -119,7 +126,7 @@ export default class Calendar extends React.Component {
           this.setState({
             calMonth: this.getMonthName(this.state.currentMonth)
           });
-          this.makeCalendar();
+          this.makeCalendar(this.state.events);
         }
       );
     } else if (this.state.currentMonth < 12) {
@@ -130,7 +137,7 @@ export default class Calendar extends React.Component {
           });
         }
         this.setState({ calMonth: this.getMonthName(this.state.currentMonth) });
-        this.makeCalendar();
+        this.makeCalendar(this.state.events);
       });
     }
   }
@@ -142,16 +149,64 @@ export default class Calendar extends React.Component {
     }
     return <button id="dayEvent"></button>;
   }
-
-  componentDidMount() {
+  
+  renderEvents(events) {
+    
     if (this.state.currentMonth > 2) {
       this.setState({ currentMonth: this.state.currentMonth - 2.0 }, () => {
-        this.makeCalendar();
+        this.makeCalendar(events.allEvents);
       });
     } else {
       this.setState({ currentMonth: this.state.currentMonth + 10.0 }, () => {
-        this.makeCalendar();
+        this.makeCalendar(events.allEvents);
       });
+    }
+  }
+  
+  getAllEventsFromDB() {
+    //NOT HARDCODED!!!
+    let tmp;
+    if (this.state.currentMonth > 10) {
+      // jan and feb
+      tmp = this.state.currentMonth - 10;
+      
+    } else {
+      tmp = this.state.currentMonth + 2;
+    }
+    console.log("in getAllEventsFromDB and month =", tmp);
+    
+     Socket.emit('load events', {
+      email: 'rayovims@gmail.com', //this we can get from google auth
+      year: this.state.actualYear,
+      month: tmp, //
+    });
+    
+    Socket.on('received events', (data) => {
+      this.setState({events: data})
+      this.renderEvents(data)
+    })
+  }
+
+  componentDidMount() {
+    
+    this.getAllEventsFromDB()
+    //TODO: make it not hardcode
+    
+  }
+  
+  openEventInfor(event) {
+    console.log(event)
+  }
+  
+  renderEvent(day) {
+    if (day.eventsInDay && day.day !== null && day.eventsInDay.length > 0) {
+       return (
+        <div className="events">
+          {day.eventsInDay.map((event, index) => (
+            <div key={index} className="event" onClick={() => this.openEventInfor(event)}>{event.Description}</div>
+          ))}
+        </div>
+      );
     }
   }
 
@@ -184,11 +239,12 @@ export default class Calendar extends React.Component {
         <div className="day">
           {this.state.z.map((day, index) => (
             <div className="dayBlock" key={index}>
-              <div>{day}</div>
-              {this.isEvent(day)}
+              <div>{day.day}</div>
+              <div>{this.renderEvent(day)}</div>
             </div>
           ))}
         </div>
+        <CreateEvent date={"Date Goes Here"} />
       </div>
     );
   }

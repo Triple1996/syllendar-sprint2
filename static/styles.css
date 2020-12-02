@@ -61,6 +61,13 @@ h2{
   height: 100px;
   border: 1px solid black;
 }
+
+.event:hover {
+  cursor: pointer;
+  border: 1px solid black;
+  padding: 2px;
+}
+
 #dayEvent {
   margin-top: 20px;
   margin-left: 45px;
@@ -165,3 +172,7 @@ button {
   width:80%;
 }
   
+  
+body {
+  background-color: lightGrey;
+}

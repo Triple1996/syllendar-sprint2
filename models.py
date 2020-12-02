@@ -49,9 +49,12 @@ class Events(db.Model):
     event_end_time = db.Column(db.String(50), nullable=False)
     location = db.Column(db.String(120))
     description = db.Column(db.String(1000))
+    day = db.Column(db.String(120))
+    year = db.Column(db.String(120))
+    month = db.Column(db.String(120))
 
     def __init__(
-        self, name, email, title, startdt, starttm, enddt, endtm, location, des
+        self, name, email, title, startdt, starttm, enddt, endtm, location, des, day, year, month
     ):
         self.name = name
         self.email = email
@@ -62,12 +65,6 @@ class Events(db.Model):
         self.event_end_time = endtm
         self.location = location
         self.description = des
-
-    def __repr__(self):
-        return "<name: {}, event: {}>, start_date: {}, start_time: {}, end_time: {}".format(
-            self.name,
-            self.event_title,
-            self.event_start_date,
-            self.event_start_time,
-            self.event_end_time,
-        )
+        self.day = day
+        self.year = year
+        self.month = month

@@ -24,6 +24,7 @@ import flask
 import flask_sqlalchemy
 from sqlalchemy.sql import exists
 import flask_socketio
+import json
 
 app = flask.Flask(__name__)
 
@@ -47,6 +48,41 @@ import models
 
 db.create_all()
 db.session.commit()
+#TODO: load one event after they create an event, maybe just create the event in the frontend then send to db. 
+
+@socketio.on("load events")
+def load_events(data):
+    print("in loading events socket")
+    email = data['email']
+    year = data['year']
+    month = data['month']
+    
+    results = db.session.query(models.Events).filter(models.Events.email == email and models.Events.year == year and models.Events.month == month).all()
+    
+    all_events = []
+        
+    for event in results:
+        x = {
+            'Name': event.name,
+            'Event': event.event_title,
+            'StartDate': event.event_start_date,
+            'EndDate': event.event_end_date,
+            'StartTime': event.event_start_time,
+            'EndTime': event.event_end_time,
+            'Location': event.location,
+            'Description': event.description,
+            'Month': event.month,
+            'Year': event.year,
+            'Day': event.day
+        }
+        all_events.append(x)
+    
+    socketio.emit(
+        'received events', {
+            'allEvents': all_events
+        }    
+    )
+
 @socketio.on("add event")
 def add_event(data):
     """
@@ -61,7 +97,12 @@ def add_event(data):
     endtm = data["endtm"]
     location = data["location"]
     des = data["des"]
+    
+    # figure out how to get the month and year automatically
 
+    month = startdt.split('/')[0]
+    year = startdt.split('/')[2]
+    day = startdt.split('/')[1]
 
     print("adding new event!")
 
@@ -77,13 +118,13 @@ def add_event(data):
     ) != True:
         db.session.add(
             models.Events(
-                name, email, title, startdt, starttm, enddt, endtm, location, des
+                name, email, title, startdt, starttm, enddt, endtm, location, des, day, year, month
             )
         )
 
         db.session.commit()
 
-    print("Added to the db")
+        print("Added to the db")
 
 
 @socketio.on("new login")  # image, email, name
