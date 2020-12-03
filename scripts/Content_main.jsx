@@ -19,7 +19,7 @@ export function Content_main() {
     });
   });
 
-  function handleSubmit() {
+  function Logout() {
     ApiCalendar.handleSignoutClick();
     ReactDOM.render(<Content />, document.getElementById('content'));
   }
@@ -149,7 +149,7 @@ export function Content_main() {
         <div className="buttonpostion">
           <button type="button" onClick={authenticate}> Auth G Calendar </button>
           <button type="button" onClick={loadevents}> Import from Google Calendar </button>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={Logout}>
             <button type="button">Sign Out</button>
           </form>
         </div>
