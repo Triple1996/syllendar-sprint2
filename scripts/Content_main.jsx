@@ -1,10 +1,9 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
+import ApiCalendar from 'react-google-calendar-api';
 import { Socket } from './Socket';
 import { Content } from './Content';
 import Calendar from './Calendar';
-import ApiCalendar from 'react-google-calendar-api';
-
 
 export function Content_main() {
   const [image, setImage] = React.useState([]);
@@ -13,134 +12,145 @@ export function Content_main() {
 
   React.useEffect(() => {
     Socket.on('userinfo', (data) => {
-      // console.log(`Received user image from server: ${data.image}`);
       setImage(data.image);
-      // console.log(`Received user email address from server: ${data.email}`);
       setEmail(data.email);
-      // console.log(`Received user name from server: ${data.name}`);
       setName(data.name);
-      console.log(`Logged in with ${data.email}`)
+      console.log(`Logged in with ${data.email}`);
     });
   });
 
-  function handleSubmit(event) {
+  function handleSubmit() {
     ApiCalendar.handleSignoutClick();
     ReactDOM.render(<Content />, document.getElementById('content'));
   }
-  
-  function authenticate(response){
-        ApiCalendar.handleAuthClick();
-        console.log(response);
-        console.log("Logged in");
-  }
-    
-  function loadevents(){
-    if (ApiCalendar.sign){
-        ApiCalendar.listUpcomingEvents(25)
-      .then(
-        ({result}) => {
-                            
-          for (var i = 0; i < result.items.length; i++){
-            let event = result.items[i]
-            
-            var title = event.summary;
-            var startdt;
-            var starttm;
-            var enddt;
-            var endtm;
-            let location = (event.location ? event.location : "N/A");
-            let des = (event.description ? event.description : "N/A");
 
-                        
-            if (event.start.date){  // If all day event
-              startdt = event.start.date.split("-").reverse().join("-");
-              starttm = "00:00"
-              enddt = event.end.date.split("-").reverse().join("-");
-              endtm = "00:00"
-              
-            }
-            else{ // Not all day event
+  function authenticate(response) {
+    ApiCalendar.handleAuthClick();
+    console.log(response);
+    console.log('Logged in');
+  }
+
+  function loadevents() {
+    if (ApiCalendar.sign) {
+      ApiCalendar.listUpcomingEvents(25)
+        .then(
+          ({ result }) => {
+            for (let i = 0; i < result.items.length; i += 1) {
+              const event = result.items[i];
+
+              const title = event.summary;
+              let startdt;
+              let starttm;
+              let enddt;
+              let endtm;
+              const location = (event.location ? event.location : 'N/A');
+              const des = (event.description ? event.description : 'N/A');
+
+              if (event.start.date) { // If all day event
+                const startdtsplit = event.start.date.split('-');
+                startdt = [startdtsplit[1], startdtsplit[2], startdtsplit[0]].join('/');
+                starttm = '00:00';
+                const enddtsplit = event.end.date.split('-');
+                enddt = [enddtsplit[1], enddtsplit[2], enddtsplit[0]].join('/');
+                endtm = '00:00';
+              } else { // Not all day event
               // take datetime object convert to time and date
-              let rawStartDateTimeSplit = event.start.dateTime.split("M").join(",").split("T").join(",").split("W").join(",").split("F").join(",").split("S").join(",").split(",");
-              let rawEndDateTimeSplit = event.end.dateTime.split("M").join(",").split("T").join(",").split("W").join(",").split("F").join(",").split("S").join(",").split(",");
-              startdt = rawStartDateTimeSplit[0].split("-").reverse().join("-");
-              starttm = rawStartDateTimeSplit[1].split("-")[0].substring(0,5);
-              enddt = rawEndDateTimeSplit[0].split("-").reverse().join("-");
-              endtm = rawEndDateTimeSplit[1].split("-")[0].substring(0,5);
-            }
+                const rawStartDateTimeSplit = event.start.dateTime.split('M').join(',').split('T').join(',')
+                  .split('W')
+                  .join(',')
+                  .split('F')
+                  .join(',')
+                  .split('S')
+                  .join(',')
+                  .split(',');
+                const rawEndDateTimeSplit = event.end.dateTime.split('M').join(',').split('T').join(',')
+                  .split('W')
+                  .join(',')
+                  .split('F')
+                  .join(',')
+                  .split('S')
+                  .join(',')
+                  .split(',');
 
-            let createdBy = event.creator.email;
-            let id = event.id;
+                const startdtsplit = rawStartDateTimeSplit[0].split('-');
+                startdt = [startdtsplit[1], startdtsplit[2], startdtsplit[0]].join('/');
+                starttm = rawStartDateTimeSplit[1].split('-')[0].substring(0, 5);
+                const enddtsplit = rawEndDateTimeSplit[0].split('-');
+                enddt = [enddtsplit[1], enddtsplit[2], enddtsplit[0]].join('/');
+                endtm = rawEndDateTimeSplit[1].split('-')[0].substring(0, 5);
+              }
 
-            var text = (
-              "name: " + name + "\n"+
-              "email: " + createdBy + "\n"+
-              `title: ${title}` + "\n"+
-              `startdt: ${startdt}`+ "\n"+
-              `starttm: ${starttm}`+ "\n"+
-              `enddt: ${enddt}`+ "\n"+
-              `endtm: ${endtm}`+ "\n"+
-              `location: ${location}`+ "\n"+
-              `des: ${des}`+ "\n");
-           
-            console.log(text);
-            
-            // Socket.emit('add event', {
-            //   name, 
-            //   email: createdBy,
-            //   title: summary,
-            //   startdt,
-            //   starttm,
-            //   enddt,
-            //   endtm,
-            //   location,
-            //   des
-              
+              const createdBy = event.creator.email;
+              const { id } = event;
+
+              const text = (
+                `name: ${name}
+                email: ${createdBy}
+                title: ${title}
+                startdt: ${startdt}
+                starttm: ${starttm}
+                enddt: ${enddt}
+                endtm: ${endtm}
+                location: ${location}
+                des: ${des}`);
+
+              console.log(text);
+
+              // Socket.emit('add event', {
+              //   name,
+              //   email: createdBy,
+              //   title: summary,
+              //   startdt,
+              //   starttm,
+              //   enddt,
+              //   endtm,
+              //   location,
+              //   des
+
             // });
-          }
-          
-        });
-        
-    }
-    else {
-      window.alert("Need to authorize Calendar access");
+            }
+          },
+        );
+    } else {
+      window.alert('Need to authorize Calendar access');
     }
   }
-  
-  function imports(){
-    var uploadedFile = document.getElementById('uploadedFile').files;
+
+  function imports() {
+    const uploadedFile = document.getElementById('uploadedFile').files;
     if (uploadedFile.length <= 0) {
       return false;
     }
-  
-  var readFiles = new FileReader();
-  readFiles.onload = function(e) { 
-    console.log(e);
-    var output = JSON.parse(e.target.result);
-    var format = JSON.stringify(output, null, 2);
-		document.getElementById('result').value = format;
+
+    const readFiles = new FileReader();
+    readFiles.onload = function (e) {
+      console.log(e);
+      const output = JSON.parse(e.target.result);
+      const format = JSON.stringify(output, null, 2);
+      document.getElementById('result').value = format;
+    };
+
+    readFiles.readAsText(uploadedFile.item(0));
   }
-  
-  readFiles.readAsText(uploadedFile.item(0));
-    
-  }
-  
+
   return (
     <div>
       <h2>My Calendar</h2>
       <Calendar />
       <div className="info">
-        <img src={image} width="90" height="90" />
+        <img src={image} alt="" width="90" height="90" />
         <p>{email}</p>
-        <p>{name}</p><br />
-        <input type="file" id="uploadedFile" /><br />
-        <button onClick={imports}>Import</button>
-        <textarea id="result"></textarea>
+        <p>{name}</p>
+        <br />
+        <input type="file" id="uploadedFile" />
+        <br />
+        <button type="button" onClick={imports}>Import</button>
+        <textarea id="result" />
         <div className="buttonpostion">
-        <button onClick={authenticate}> Auth G Calendar </button>
-          <button onClick={loadevents}> Import from Google Calendar </button>
+          <button type="button" onClick={authenticate}> Auth G Calendar </button>
+          <button type="button" onClick={loadevents}> Import from Google Calendar </button>
           <form onSubmit={handleSubmit}>
-            <button>Sign Out</button>
+            <button type="button">Sign Out</button>
           </form>
         </div>
       </div>
