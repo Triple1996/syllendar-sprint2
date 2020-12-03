@@ -19,10 +19,13 @@ export default function CreateEvent({ date }) {
   const [starttm, setStarttm] = useState('');
   const [enddt, setEnddt] = useState('');
   const [endtm, setEndtm] = useState('');
+  const [imp, setImp] = useState(false);
   const [location, setLocation] = useState('');
+  const [contact, setContact] = useState("")
   const [des, setDes] = useState('');
 
   function handleSubmit() {
+    
     Socket.emit('add event', {
       name,
       email,
@@ -31,7 +34,9 @@ export default function CreateEvent({ date }) {
       starttm,
       enddt,
       endtm,
+      imp,
       location,
+      contact,
       des,
     });
 
@@ -109,10 +114,30 @@ export default function CreateEvent({ date }) {
                   <div className="col-10 text-center">
                     <input
                       className="form-group"
+                      value={contact}
+                      onChange={(e) => setContact(e.target.value)}
+                      placeholder="Phone Number ex: +1..."
+                    />
+                  </div>
+                  <div className="col-10 text-center">
+                    <input
+                      className="form-group"
                       value={des}
                       onChange={(e) => setDes(e.target.value)}
                       placeholder="Description"
                     />
+                  </div>
+                  <div className="col-10 text-center">
+                    <label>
+                      <input
+                        name="Important"
+                        className="form-group"
+                        type="checkbox"
+                        checked={imp}
+                        onChange={(e) => setImp(e.target.checked)}
+                      />
+                      SMS Notification
+                    </label>
                   </div>
                 <button className="btn btn-primary" onClick={handleSubmit}>Submit</button>
           </div>
