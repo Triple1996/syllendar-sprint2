@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CreateEvent from './CreateEvent';
 import { Socket } from './Socket';
+import NewModal from './NewModal';
 
 export default class Calendar extends React.Component {
   constructor () {
@@ -203,7 +204,7 @@ export default class Calendar extends React.Component {
        return (
         <div className="events">
           {day.eventsInDay.map((event, index) => (
-            <div key={index} className="event" onClick={() => this.openEventInfor(event)}>{event.Description}</div>
+            <div key={index} className="event" onClick={() => this.openEventInfor(event)}>{event.Event}</div>
           ))}
         </div>
       );
@@ -244,6 +245,7 @@ export default class Calendar extends React.Component {
             </div>
           ))}
         </div>
+        <NewModal />
         <CreateEvent date={"Date Goes Here"} />
       </div>
     );
