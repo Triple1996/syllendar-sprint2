@@ -52,9 +52,9 @@ class Events(db.Model):
     location = db.Column(db.String(120))
     contact_number = db.Column(db.String(20))
     description = db.Column(db.String(1000))
-    day = db.Column(db.String(120))
-    year = db.Column(db.String(120))
-    month = db.Column(db.String(120))
+    day = db.Column(db.String(10))
+    year = db.Column(db.String(10))
+    month = db.Column(db.String(10))
 
     def __init__(
         self, name, email, title, startdt, starttm, enddt, endtm, imp, email_notif, location, contact, des, day, year, month
