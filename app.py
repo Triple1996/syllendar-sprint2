@@ -24,7 +24,7 @@ import flask
 import flask_sqlalchemy
 from sqlalchemy.sql import exists
 import flask_socketio
-import json
+
 
 app = flask.Flask(__name__)
 
@@ -52,6 +52,9 @@ db.session.commit()
 
 @socketio.on("load events")
 def load_events(data):
+    """
+    Get events from DB 
+    """
     print("in loading events socket")
     email = data['email']
     year = data['year']
@@ -166,4 +169,4 @@ if __name__ == "__main__":
         port=int(os.getenv("PORT", 8080)),
         debug=True,
     )
-
+    
