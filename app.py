@@ -149,7 +149,7 @@ def new_login(data):
 
         db.session.commit()
 
-    socketio.emit("userinfo", {"image": image_link, "email": email, "name": name})
+    socketio.emit("userinfo", {"image": image_link, "email": email, "name": name}, room=flask.request.sid)
 
     # emit_all_events
 
