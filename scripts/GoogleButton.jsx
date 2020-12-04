@@ -2,7 +2,7 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import GoogleLogin from 'react-google-login';
 import { Socket } from './Socket';
-import { Content_main } from './Content_main';
+import { ContentMain } from './ContentMain';
 
 function responseGoogle(response) {
   const url = response.profileObj.imageUrl;
@@ -15,7 +15,7 @@ function responseGoogle(response) {
     name,
   });
 
-  ReactDOM.render(<Content_main />, document.getElementById('content'));
+  ReactDOM.render(<ContentMain />, document.getElementById('content'));
 }
 
 export function GoogleButton() {

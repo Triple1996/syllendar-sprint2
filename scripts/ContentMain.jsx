@@ -6,7 +6,7 @@ import { Content } from './Content';
 import Calendar from './Calendar';
 import { parseData } from './GcalendarHelper';
 
-export function Content_main() {
+export function ContentMain() {
   const [image, setImage] = React.useState([]);
   const [email, setEmail] = React.useState([]);
   const [name, setName] = React.useState([]);
