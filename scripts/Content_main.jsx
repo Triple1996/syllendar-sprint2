@@ -110,7 +110,7 @@ export function Content_main() {
         <div className="buttonpostion">
           <button type="button" onClick={authenticate}> Auth G Calendar </button>
           <div id="import-events-form">
-            <label for="num-events"> # of events to fetch: </label>
+            <label htmlFor="num-events"> # of events to fetch: </label>
             <input id="num-events" type="number" placeholder="25"></input>
             <input type="submit" onClick={loadevents} value="Import from Google Calendar"></input>
           </div>
