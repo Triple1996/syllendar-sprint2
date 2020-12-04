@@ -1,57 +1,57 @@
-export function parseData (event) {
-    
-    const title = event.summary;
-    let startdt;
-    let starttm;
-    let enddt;
-    let endtm;
-    const location = (event.location ? event.location : 'N/A');
-    const des = (event.description ? event.description : 'N/A');
+export default function parseData(event) {
+  const START = 0;
+  const TIME_FORMAT_LENGTH = 5;
 
-    if (event.start.date) { // If all day event
-        const startdtsplit = event.start.date.split('-');
-        startdt = [startdtsplit[1], startdtsplit[2], startdtsplit[0]].join('/');
-        starttm = '00:00';
-        const enddtsplit = event.end.date.split('-');
-        enddt = [enddtsplit[1], enddtsplit[2], enddtsplit[0]].join('/');
-        endtm = '00:00';
-    } 
-    else { // Not all day event
-        const rawStartDateTimeSplit = event.start.dateTime.split('M').join(',').split('T').join(',')
-          .split('W')
-          .join(',')
-          .split('F')
-          .join(',')
-          .split('S')
-          .join(',')
-          .split(',');
-        const rawEndDateTimeSplit = event.end.dateTime.split('M').join(',').split('T').join(',')
-          .split('W')
-          .join(',')
-          .split('F')
-          .join(',')
-          .split('S')
-          .join(',')
-          .split(',');
+  const title = event.summary;
+  let startDate;
+  let startTime;
+  let endDate;
+  let endTime;
+  const location = (event.location ? event.location : 'N/A');
+  const des = (event.description ? event.description : 'N/A');
 
-        const startdtsplit = rawStartDateTimeSplit[0].split('-');
-        startdt = [startdtsplit[1], startdtsplit[2], startdtsplit[0]].join('/');
-        starttm = rawStartDateTimeSplit[1].split('-')[0].substring(0, 5);
-        const enddtsplit = rawEndDateTimeSplit[0].split('-');
-        enddt = [enddtsplit[1], enddtsplit[2], enddtsplit[0]].join('/');
-        endtm = rawEndDateTimeSplit[1].split('-')[0].substring(0, 5);
-    }
+  if (event.start.date) { // If all day event
+    const startdtsplit = event.start.date.split('-');
+    startDate = [startdtsplit[1], startdtsplit[2], startdtsplit[0]].join('/');
+    startTime = '00:00';
+    const enddtsplit = event.end.date.split('-');
+    endDate = [enddtsplit[1], enddtsplit[2], enddtsplit[0]].join('/');
+    endTime = '00:00';
+  } else { // Not all day event
+    const rawStartDateTimeSplit = event.start.dateTime.split('M').join(',').split('T').join(',')
+      .split('W')
+      .join(',')
+      .split('F')
+      .join(',')
+      .split('S')
+      .join(',')
+      .split(',');
+    const rawEndDateTimeSplit = event.end.dateTime.split('M').join(',').split('T').join(',')
+      .split('W')
+      .join(',')
+      .split('F')
+      .join(',')
+      .split('S')
+      .join(',')
+      .split(',');
 
-    const createdBy = event.creator.email;
-    return {
-        "createdBy" : createdBy, 
-        "title" : title, 
-        "startdt" : startdt, 
-        "starttm" : starttm, 
-        "enddt" : enddt, 
-        "endtm" : endtm, 
-        "location" : location, 
-        "des" : des
-    }
+    const startdtsplit = rawStartDateTimeSplit[0].split('-');
+    startDate = [startdtsplit[1], startdtsplit[2], startdtsplit[0]].join('/');
+    startTime = rawStartDateTimeSplit[1].split('-')[0].substring(START, TIME_FORMAT_LENGTH);
+    const enddtsplit = rawEndDateTimeSplit[0].split('-');
+    endDate = [enddtsplit[1], enddtsplit[2], enddtsplit[0]].join('/');
+    endTime = rawEndDateTimeSplit[1].split('-')[0].substring(START, TIME_FORMAT_LENGTH);
+  }
 
+  const createdBy = event.creator.email;
+  return {
+    createdBy,
+    title,
+    startdt: startDate,
+    starttm: startTime,
+    enddt: endDate,
+    endtm: endTime,
+    location,
+    des,
+  };
 }
