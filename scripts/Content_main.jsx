@@ -56,18 +56,18 @@ export function Content_main() {
 
               console.log(text);
 
-              // Socket.emit('add event', {
-              //   name,
-              //   email: createdBy,
-              //   title: summary,
-              //   startdt,
-              //   starttm,
-              //   enddt,
-              //   endtm,
-              //   location,
-              //   des
-
+            //   Socket.emit('add event', {
+            //     name,
+            //     email : `${EventData["createdBy"]}`,
+            //     title: `${EventData["title"]}`,
+            //     startdt: `${EventData["startdt"]}`,
+            //     starttm: `${EventData["starttm"]}`,
+            //     enddt: `${EventData["enddt"]}`,
+            //     endtm: `${EventData["endtm"]}`,
+            //     location: `${EventData["location"]}`,
+            //     des: `${EventData["des"]}`
             // });
+             
             }
           },
         );
