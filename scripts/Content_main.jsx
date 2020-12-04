@@ -33,7 +33,8 @@ export function Content_main() {
 
   function loadevents() {
     if (ApiCalendar.sign) {
-      ApiCalendar.listUpcomingEvents(25)
+      ApiCalendar.listUpcomingEvents(document.getElementById("num-events").value ? 
+          document.getElementById("num-events").value : 25)
         .then(
           ({ result }) => {
             for (let i = 0; i < result.items.length; i += 1) {
@@ -108,7 +109,11 @@ export function Content_main() {
         <textarea id="result" />
         <div className="buttonpostion">
           <button type="button" onClick={authenticate}> Auth G Calendar </button>
-          <button type="button" onClick={loadevents}> Import from Google Calendar </button>
+          <div id="import-events-form">
+            <label for="num-events"> # of events to fetch: </label>
+            <input id="num-events" type="number" placeholder="25"></input>
+            <input type="submit" onClick={loadevents} value="Import from Google Calendar"></input>
+          </div>
           <form onSubmit={Logout}>
             <button type="button">Sign Out</button>
           </form>
