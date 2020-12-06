@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import CreateEvent from './CreateEvent';
 import { Socket } from './Socket';
-import NewModal from './NewModal';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 export default class Calendar extends React.Component {
   constructor () {
@@ -12,7 +13,9 @@ export default class Calendar extends React.Component {
       currentYear: new Date().getFullYear(),
       calMonth: new Date().toLocaleString("default", { month: "long" }),
       actualYear: new Date().getFullYear(),
-      events: []
+      events: [],
+      showUpdateEventModal: false,
+      showAddEventModal: false
     }
   }
   
@@ -196,6 +199,7 @@ export default class Calendar extends React.Component {
   }
   
   openEventInfor(event) {
+    //open modal here again to update the event and be able to see it
     console.log(event)
   }
   
@@ -204,7 +208,9 @@ export default class Calendar extends React.Component {
        return (
         <div className="events">
           {day.eventsInDay.map((event, index) => (
-            <div key={index} className="event" onClick={() => this.openEventInfor(event)}>{event.Event}</div>
+            <div>
+              <div key={index} className="event" onClick={() => this.setState({showUpdateEventModal: true})}>{event.Event}</div>
+            </div>
           ))}
         </div>
       );
@@ -214,19 +220,23 @@ export default class Calendar extends React.Component {
   render() {
     const { calMonth, actualYear } = this.state;
     return (
-      <div className="Syllendar">
-        <div className="month">
-          <h1>
-            <button id="left" onClick={() => this.lastMonth()}>
-              {" "}
-              &larr;{" "}
-            </button>
-            {calMonth} {actualYear}
-            <button id="right" onClick={() => this.nextMonth()}>
-              {" "}
-              &rarr;{" "}
-            </button>
-          </h1>
+      <div className="Syllendar container-fluid">
+        <div className="row">
+          <div className="col-12 text-center">
+              <div className="month">
+                <h1>
+                  <button id="left" onClick={() => this.lastMonth()}>
+                    {" "}
+                    &larr;{" "}
+                  </button>
+                  {calMonth} {actualYear}
+                  <button id="right" onClick={() => this.nextMonth()}>
+                    {" "}
+                    &rarr;{" "}
+                  </button>
+                </h1>
+              </div>
+          </div>
         </div>
         <div className="week">
           <div>Sun</div>
@@ -239,14 +249,40 @@ export default class Calendar extends React.Component {
         </div>
         <div className="day">
           {this.state.z.map((day, index) => (
-            <div className="dayBlock" key={index}>
+            <div className="dayBlock" key={index} onClick={() => this.setState({showAddEventModal: true})}>
               <div>{day.day}</div>
               <div>{this.renderEvent(day)}</div>
             </div>
           ))}
         </div>
-        <NewModal />
-        <CreateEvent date={"Date Goes Here"} />
+        <Modal
+          size="lg"
+          show={this.state.showAddEventModal}
+          onHide={() => this.setState({showAddEventModal: false})}
+          aria-labelledby="example-modal-sizes-title-lg"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="example-modal-sizes-title-lg">
+              Large Modal
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <CreateEvent date={"Date Goes Here"} />
+          </Modal.Body>
+        </Modal>
+        <Modal
+          size="lg"
+          show={this.state.showUpdateEventModal}
+          onHide={() => this.setState({showUpdateEventModal: false})}
+          aria-labelledby="example-modal-sizes-title-lg"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="example-modal-sizes-title-lg">
+              Large Modal
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Body of the modal goes here</Modal.Body>
+        </Modal>
       </div>
     );
   }
