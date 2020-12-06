@@ -45,7 +45,6 @@ export default function CreateEvent({ date }) {
     return (
         <div>
               <div className="form-group">
-                <h3>Create an event</h3>
                 <div className="row">
                   <div className="col-10 text-center">
                     <input

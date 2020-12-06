@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import CreateEvent from './CreateEvent';
+import UpdateEvent from './UpdateEvent';
 import { Socket } from './Socket';
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
 
 export default class Calendar extends React.Component {
   constructor () {
@@ -14,8 +14,10 @@ export default class Calendar extends React.Component {
       calMonth: new Date().toLocaleString("default", { month: "long" }),
       actualYear: new Date().getFullYear(),
       events: [],
-      showUpdateEventModal: false,
-      showAddEventModal: false
+      showUpdateEventContent: false,
+      showAddEventContent: false,
+      selectedDate: "",
+      show: false
     }
   }
   
@@ -198,6 +200,10 @@ export default class Calendar extends React.Component {
     
   }
   
+  componentDidUpdate() {
+    console.log(this.state)
+  }
+  
   openEventInfor(event) {
     //open modal here again to update the event and be able to see it
     console.log(event)
@@ -209,7 +215,7 @@ export default class Calendar extends React.Component {
         <div className="events">
           {day.eventsInDay.map((event, index) => (
             <div>
-              <div key={index} className="event" onClick={() => this.setState({showUpdateEventModal: true})}>{event.Event}</div>
+              <div key={index} className="event" onClick={() => this.setState({show: true, showUpdateEventContent: true})}>{event.Event}</div>
             </div>
           ))}
         </div>
@@ -218,6 +224,8 @@ export default class Calendar extends React.Component {
   }
 
   render() {
+    //TODO: Try do ternary if statements to render either add event, or update event based on the state.
+    //have one modal component, 2 states: 1 for showing a modal, other for which content you want to see in the modal
     const { calMonth, actualYear } = this.state;
     return (
       <div className="Syllendar container-fluid">
@@ -249,39 +257,45 @@ export default class Calendar extends React.Component {
         </div>
         <div className="day">
           {this.state.z.map((day, index) => (
-            <div className="dayBlock" key={index} onClick={() => this.setState({showAddEventModal: true})}>
-              <div>{day.day}</div>
+            <div className="dayBlock" key={index} >
+              <div className="row">
+                <div className="col-8 left">
+                  <div>{day.day}</div>
+                </div>
+                <div className="col-4 right">
+                  {day.day ? 
+                  <div 
+                    id="addEventBtn" 
+                    className="btn btn-primary btn-sm" 
+                    onClick={() => this.setState({show: true, showAddEventContent: true, selectedDate: day.day})}
+                    >
+                  +
+                  </div> 
+                  : 
+                  <div></div> 
+                  }
+                </div>
+              </div>
               <div>{this.renderEvent(day)}</div>
             </div>
           ))}
         </div>
         <Modal
           size="lg"
-          show={this.state.showAddEventModal}
-          onHide={() => this.setState({showAddEventModal: false})}
+          show={this.state.show}
+          onHide={() => this.setState({show: false, showAddEventContent: false, showUpdateEventContent: false})}
           aria-labelledby="example-modal-sizes-title-lg"
         >
           <Modal.Header closeButton>
             <Modal.Title id="example-modal-sizes-title-lg">
-              Large Modal
+              {this.state.showAddEventContent ? "Create Event" : "" }
+              {this.state.showUpdateEventContent ? "Update Event" : "" }
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <CreateEvent date={"Date Goes Here"} />
+            {this.state.showAddEventContent ? <CreateEvent date={this.state.selectedDate}/> : <div></div> }
+            {this.state.showUpdateEventContent ? <UpdateEvent /> : <div></div> }
           </Modal.Body>
-        </Modal>
-        <Modal
-          size="lg"
-          show={this.state.showUpdateEventModal}
-          onHide={() => this.setState({showUpdateEventModal: false})}
-          aria-labelledby="example-modal-sizes-title-lg"
-        >
-          <Modal.Header closeButton>
-            <Modal.Title id="example-modal-sizes-title-lg">
-              Large Modal
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Body of the modal goes here</Modal.Body>
         </Modal>
       </div>
     );
