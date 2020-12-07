@@ -5,6 +5,7 @@ import { Socket } from './Socket';
 import { Content } from './Content';
 import Calendar from './Calendar';
 import { parseData } from './GcalendarHelper';
+import { LandingPage } from './LandingPage';
 
 export function ContentMain() {
   const [image, setImage] = React.useState([]);
@@ -93,10 +94,16 @@ export function ContentMain() {
 
     readFiles.readAsText(uploadedFile.item(0));
   }
+  
+  function AboutPage() {
+     ReactDOM.render(<LandingPage />, document.getElementById('content'));
+  }
+    
 
   return (
     <div>
       <h2>My Calendar</h2>
+      <button type="button" onClick={AboutPage}>About Us</button>
       <Calendar />
       <div className="info">
         <img src={image} alt="" width="90" height="90" />
