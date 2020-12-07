@@ -7,7 +7,7 @@ export default function Modal({ isShowing, hide, date }) {
   // example of how to access the day
   //console.log(date.day); // this will print out the number of which of the boxes in the calendar component got selected.
   // we can create the date something like this
-  const currentDate = `${date.month}/${date.day}/${date.year}`;
+  //const currentDate = `${date.month}/${date.day}/${date.year}`;
   // then we can pass this as the startdate and remove the whole startdt useState hook, I will comment it out .
 
   const [name, setName] = useState('');

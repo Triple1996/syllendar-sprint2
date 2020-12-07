@@ -9,8 +9,6 @@ export default function CreateEvent({ date }) {
   // we can create the date something like this
   //const currentDate = `${date.month}/${date.day}/${date.year}`;
   // then we can pass this as the startdate and remove the whole startdt useState hook, I will comment it out .
-  
-  
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
