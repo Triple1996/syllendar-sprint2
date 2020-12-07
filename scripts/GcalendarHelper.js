@@ -7,6 +7,9 @@ export function parseData(event) {
   let startTime;
   let endDate;
   let endTime;
+  const imp = false;
+  const contact = "N/A"
+
   const location = (event.location ? event.location : 'N/A');
   const des = (event.description ? event.description : 'N/A');
 
@@ -51,7 +54,9 @@ export function parseData(event) {
     starttm: startTime,
     enddt: endDate,
     endtm: endTime,
+    imp,
     location,
+    contact,
     des,
   };
 }
