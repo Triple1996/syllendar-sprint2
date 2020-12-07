@@ -152,3 +152,121 @@ body {
   padding-bottom: 0;
   padding-top: 0;
 }
+
+.firstmember {
+  position: fixed;
+  top: 50px;
+  left: 20px;
+  height: 450px;
+  width: 240px;
+  background-color:white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+  border-radius: 15px;
+  border: 2px solid black;
+  padding: 20px; 
+}
+.secondmember {
+  position: fixed;
+  top: 50px;
+  left: 280px;
+  height: 450px;
+  width: 240px;
+  background-color:white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+  border-radius: 15px;
+  border: 2px solid black;
+  padding: 20px; 
+}
+
+.thirdmember {
+  position: fixed;
+  top: 50px;
+  left: 550px;
+  height: 450px;
+  width: 240px;
+  background-color:white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+  border-radius: 15px;
+  border: 2px solid black;
+  padding: 20px; 
+}
+.fourthmember {
+  position: fixed;
+  top: 50px;
+  left: 830px;
+  height: 450px;
+  width: 240px;
+  background-color:white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+  border-radius: 15px;
+  border: 2px solid black;
+  padding: 20px; 
+}
+.fifthmember {
+  position: fixed;
+  top: 50px;
+  left: 1110px;
+  height: 450px;
+  width: 240px;
+  background-color:white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+  border-radius: 15px;
+  border: 2px solid black;
+  padding: 20px; 
+}
+.center{
+  border-radius: 0%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  
+}
+.techUse {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  height: 90px;
+  width: 1346px;
+  background-color:white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+  border-radius: 15px;
+  border: 2px solid black;
+  padding: 20px; 
+}
+p1{
+  font-size:30px;
+}
+  
+p2{
+  position: fixed;
+  bottom: 100px;
+  left: 1px;
+  font-size:30px;
+}
+  
+
+
+
