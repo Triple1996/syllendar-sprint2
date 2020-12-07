@@ -52,24 +52,28 @@ export function ContentMain() {
                 starttm: ${EventData["starttm"]}
                 enddt: ${EventData["enddt"]}
                 endtm: ${EventData["endtm"]}
+                imp: ${EventData["imp"]}
                 location: ${EventData["location"]}
+                contact: ${EventData["contact"]}
                 des: ${EventData["des"]}`
               );
 
               console.log(text);
 
-            //   Socket.emit('add event', {
-            //     name,
-            //     email : `${EventData["createdBy"]}`,
-            //     title: `${EventData["title"]}`,
-            //     startdt: `${EventData["startdt"]}`,
-            //     starttm: `${EventData["starttm"]}`,
-            //     enddt: `${EventData["enddt"]}`,
-            //     endtm: `${EventData["endtm"]}`,
-            //     location: `${EventData["location"]}`,
-            //     des: `${EventData["des"]}`
-            // });
-             
+              Socket.emit('add event', {
+                name,
+                email : `${EventData["createdBy"]}`,
+                title: `${EventData["title"]}`,
+                startdt: `${EventData["startdt"]}`,
+                starttm: `${EventData["starttm"]}`,
+                enddt: `${EventData["enddt"]}`,
+                endtm: `${EventData["endtm"]}`,
+                imp: "false",
+                location: `${EventData["location"]}`,
+                contact: "N/A",
+                des: `${EventData["des"]}`
+              });
+
             }
           },
         );
