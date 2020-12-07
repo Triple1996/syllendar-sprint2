@@ -1,4 +1,4 @@
-export default function parseData(event) {
+export function parseData(event) {
   const START = 0;
   const TIME_FORMAT_LENGTH = 5;
 
