@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import CreateEvent from './CreateEvent';
 import UpdateEvent from './UpdateEvent';
 import { Socket } from './Socket';
-import Modal from 'react-bootstrap/Modal';
+import Modal from './Modal';
 
 export default class Calendar extends React.Component {
   constructor () {
