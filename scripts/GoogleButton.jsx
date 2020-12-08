@@ -22,7 +22,7 @@ export function GoogleButton() {
   return (
     <GoogleLogin
       className="googleButton"
-      clientId="668309875676-im3a1fisoqlb32o5d09dd8t243qn9cok.apps.googleusercontent.com"
+      clientId="347824852945-g2jnnb98davd2dag3a3619enrkha24ac.apps.googleusercontent.com"
       buttonText="Login"
       onSuccess={responseGoogle}
       onFailure={responseGoogle}
