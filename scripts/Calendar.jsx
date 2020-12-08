@@ -147,14 +147,6 @@ export default class Calendar extends React.Component {
       });
     }
   }
-
-  isEvent(day) {
-    //TODO -- check for event and add event button with event name if exists
-    if (day === null) {
-      return;
-    }
-    return <button id="dayEvent"></button>;
-  }
   
   renderEvents(events) {
     
@@ -170,21 +162,17 @@ export default class Calendar extends React.Component {
   }
   
   getAllEventsFromDB() {
-    //NOT HARDCODED!!!
-    let tmp;
+    let month;
     if (this.state.currentMonth > 10) {
-      // jan and feb
-      tmp = this.state.currentMonth - 10;
-      
+      month = this.state.currentMonth - 10;
     } else {
-      tmp = this.state.currentMonth + 2;
+      month = this.state.currentMonth + 2;
     }
-    console.log("in getAllEventsFromDB and month =", tmp);
     
-     Socket.emit('load events', {
-      email: 'rayovims@gmail.com', //this we can get from google auth
+    Socket.emit('load events', {
+      email: window.sessionStorage.getItem('email'),
       year: this.state.actualYear,
-      month: tmp, //
+      month: month,
     });
     
     Socket.on('received events', (data) => {

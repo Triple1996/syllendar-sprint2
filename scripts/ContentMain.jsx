@@ -17,6 +17,7 @@ export function ContentMain() {
       setImage(data.image);
       setEmail(data.email);
       setName(data.name);
+      window.sessionStorage.setItem('email', data.email)
       console.log(`Logged in with ${data.email}`);
     });
   });
