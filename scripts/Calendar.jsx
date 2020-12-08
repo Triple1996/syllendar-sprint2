@@ -17,8 +17,9 @@ export default class Calendar extends React.Component {
       showUpdateEventContent: false,
       showAddEventContent: false,
       selectedDate: "",
-      show: false
-    }
+      show: false,
+      skip: 0
+    };
   }
   
   makeCalendar(events = []) {
@@ -62,14 +63,14 @@ export default class Calendar extends React.Component {
       y[x + fifthPart - 1] = {day: x, eventsInDay: []};
         for (let i = 0; i < events.length; i ++) {
           if (parseInt(events[i].Day) == x) {
-            y[x + fifthPart - 1].eventsInDay.push(events[i])
+            y[x + fifthPart - 1].eventsInDay.push(events[i]);
           } 
         }
     }
 
     for (x = 0; x < 7; x++) {
       if (y[x] === 32) {
-        y[x] = {day: null, eventsInDay: []}
+        y[x] = {day: null, eventsInDay: []};
       }
     }
     
@@ -106,7 +107,7 @@ export default class Calendar extends React.Component {
           this.setState({
             calMonth: this.getMonthName(this.state.currentMonth)
           });
-          this.makeCalendar();
+          this.getAllEventsFromDB();
         }
       );
     } else {
@@ -119,7 +120,7 @@ export default class Calendar extends React.Component {
         this.setState({
           calMonth: this.getMonthName(this.state.currentMonth)
         });
-        this.makeCalendar(this.state.events);
+        this.getAllEventsFromDB();
       });
     }
   }
@@ -132,7 +133,7 @@ export default class Calendar extends React.Component {
           this.setState({
             calMonth: this.getMonthName(this.state.currentMonth)
           });
-          this.makeCalendar(this.state.events);
+          this.getAllEventsFromDB();
         }
       );
     } else if (this.state.currentMonth < 12) {
@@ -143,9 +144,10 @@ export default class Calendar extends React.Component {
           });
         }
         this.setState({ calMonth: this.getMonthName(this.state.currentMonth) });
-        this.makeCalendar(this.state.events);
+        this.getAllEventsFromDB();
       });
     }
+    
   }
 
   isEvent(day) {
@@ -157,15 +159,19 @@ export default class Calendar extends React.Component {
   }
   
   renderEvents(events) {
-    
-    if (this.state.currentMonth > 2) {
-      this.setState({ currentMonth: this.state.currentMonth - 2.0 }, () => {
-        this.makeCalendar(events.allEvents);
-      });
-    } else {
-      this.setState({ currentMonth: this.state.currentMonth + 10.0 }, () => {
-        this.makeCalendar(events.allEvents);
-      });
+    if (this.state.skip == 0) {
+      if (this.state.currentMonth > 2) {
+        this.setState({ currentMonth: this.state.currentMonth - 2.0 }, () => {
+          this.makeCalendar(events.allEvents);
+        });
+      } else {
+        this.setState({ currentMonth: this.state.currentMonth + 10.0 }, () => {
+          this.makeCalendar(events.allEvents);
+        });
+      }
+    }
+    else{
+      this.makeCalendar(events.allEvents);
     }
   }
   
@@ -181,6 +187,8 @@ export default class Calendar extends React.Component {
     }
     console.log("in getAllEventsFromDB and month =", tmp);
     
+    this.setState({skip: 1});
+    
      Socket.emit('load events', {
       email: 'rayovims@gmail.com', //this we can get from google auth
       year: this.state.actualYear,
@@ -188,25 +196,23 @@ export default class Calendar extends React.Component {
     });
     
     Socket.on('received events', (data) => {
-      this.setState({events: data})
-      this.renderEvents(data)
-    })
+      this.setState({events: data});
+      this.renderEvents(data);
+    });
   }
 
   componentDidMount() {
-    
-    this.getAllEventsFromDB()
-    //TODO: make it not hardcode
-    
+    this.getAllEventsFromDB() 
+    // => (this.setState({skip: 1}));
   }
   
   componentDidUpdate() {
-    console.log(this.state)
+    console.log(this.state);
   }
   
   openEventInfor(event) {
     //open modal here again to update the event and be able to see it
-    console.log(event)
+    console.log(event);
   }
   
   renderEvent(day) {
