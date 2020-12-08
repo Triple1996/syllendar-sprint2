@@ -120,9 +120,11 @@ export function ContentMain() {
         <textarea id="result" />
         <div id="import-events-form">
           <br/>
-          <label htmlFor="num-events"> # of events to fetch: </label>
-          <input id="num-events" type="number" placeholder="25"></input>
-          <input type="submit" onClick={loadevents} value="Import from G Calendar"></input>
+          <h5> Google Calendar</h5>
+          <label htmlFor="num-events"> Get
+            <span><input id="num-events" type="number" placeholder="25"></input></span> 
+          Events</label>
+          <input type="button" onClick={loadevents} value="Import Events"></input>
           <button type="button" onClick={authenticate}> Auth G Calendar </button>
         </div>
         <br/>
