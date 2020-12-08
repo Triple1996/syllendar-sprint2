@@ -119,13 +119,13 @@ export function ContentMain() {
         <button type="button" onClick={imports}>Import</button>
         <textarea id="result" />
         <div id="import-events-form">
-          <br/><br/>
+          <br/>
           <label htmlFor="num-events"> # of events to fetch: </label>
           <input id="num-events" type="number" placeholder="25"></input>
           <input type="submit" onClick={loadevents} value="Import from G Calendar"></input>
           <button type="button" onClick={authenticate}> Auth G Calendar </button>
         </div>
-        <br/> <br/>
+        <br/>
         <div className="buttonpostion">
           <form onSubmit={Logout}>
             <button type="button">Sign Out</button>
