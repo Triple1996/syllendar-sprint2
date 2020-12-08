@@ -17,6 +17,7 @@ export function ContentMain() {
       setImage(data.image);
       setEmail(data.email);
       setName(data.name);
+      window.sessionStorage.setItem('email', data.email)
       console.log(`Logged in with ${data.email}`);
     });
   });
@@ -118,13 +119,17 @@ export function ContentMain() {
         <br />
         <button type="button" onClick={imports}>Import</button>
         <textarea id="result" />
-        <div className="buttonpostion">
+        <div id="import-events-form">
+          <br/>
+          <h5> Google Calendar</h5>
+          <label htmlFor="num-events"> Get
+            <span><input id="num-events" type="number" placeholder="25"></input></span> 
+          Events</label>
+          <input type="button" onClick={loadevents} value="Import Events"></input>
           <button type="button" onClick={authenticate}> Auth G Calendar </button>
-          <div id="import-events-form">
-            <label htmlFor="num-events"> # of events to fetch: </label>
-            <input id="num-events" type="number" placeholder="25"></input>
-            <input type="submit" onClick={loadevents} value="Import from Google Calendar"></input>
-          </div>
+        </div>
+        <br/>
+        <div className="buttonpostion">
           <form onSubmit={Logout}>
             <button type="button">Sign Out</button>
           </form>
