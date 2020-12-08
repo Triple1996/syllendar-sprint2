@@ -118,13 +118,15 @@ export function ContentMain() {
         <br />
         <button type="button" onClick={imports}>Import</button>
         <textarea id="result" />
-        <div className="buttonpostion">
+        <div id="import-events-form">
+          <br/><br/>
+          <label htmlFor="num-events"> # of events to fetch: </label>
+          <input id="num-events" type="number" placeholder="25"></input>
+          <input type="submit" onClick={loadevents} value="Import from G Calendar"></input>
           <button type="button" onClick={authenticate}> Auth G Calendar </button>
-          <div id="import-events-form">
-            <label htmlFor="num-events"> # of events to fetch: </label>
-            <input id="num-events" type="number" placeholder="25"></input>
-            <input type="submit" onClick={loadevents} value="Import from Google Calendar"></input>
-          </div>
+        </div>
+        <br/> <br/>
+        <div className="buttonpostion">
           <form onSubmit={Logout}>
             <button type="button">Sign Out</button>
           </form>

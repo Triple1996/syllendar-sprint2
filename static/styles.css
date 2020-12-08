@@ -11,21 +11,16 @@ button{
 
 .info{
     position: fixed;
-    top: 22px;
-    left: 1120px;
-    width: 200px;
+    top: 150px;
+    right: 20px;
+    width: 215px;
     height: 580px;
     background-color: Bisque;
     text-align: center;
     padding: 10px;
     border-radius: 15px;
     border-style: groove;
-}
-
-.buttonpostion{
-    position: fixed;
-    top: 540px;
-    left:1180;
+    float: right;
 }
 
 img {
@@ -118,10 +113,11 @@ button {
 }
 
 .Syllendar{
-  position: static;
-  top: 0;
-  left: 0;
+  position: fixed;
+  top: 100px;
+  left: 50px;
   width:80%;
+  float: left;
 }
 
 body {
