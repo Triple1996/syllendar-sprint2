@@ -96,7 +96,7 @@ def load_events(data):
     socketio.emit(
         'received events', {
             'allEvents': all_events
-        }    
+        }, room=flask.request.sid
     )
 
 @socketio.on("add event")
