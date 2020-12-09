@@ -4,10 +4,12 @@ import { Socket } from './Socket';
 
 export function Content() {
   return (
+    <div className="col-12 text-center">
     <div className="container">
-      <h1>Syllendar</h1>
+      <img src="/static/Syllendar.jpg" className="center"/>
+      <a href="https://accounts.google.com/signup/v2/webcreateaccount?hl=en&flowName=GlifWebSignIn&flowEntry=SignUp" className="center"><button>Sign Up</button></a> 
       <GoogleButton />
-      <a href="https://accounts.google.com/signup/v2/webcreateaccount?hl=en&flowName=GlifWebSignIn&flowEntry=SignUp"><button>Sign Up</button></a>
+    </div>
     </div>
   );
 }
