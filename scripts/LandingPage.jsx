@@ -98,7 +98,7 @@ export function LandingPage() {
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         />
-        <a href="#top">
+        <a href="https://www.linkedin.com/in/saksham-banga-47aab516b/">
           <i className="fa fa-linkedin" />
           {' '}
         </a>
