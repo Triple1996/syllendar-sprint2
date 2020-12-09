@@ -19,7 +19,8 @@ export default class Calendar extends React.Component {
       selectedDate: "",
       show: false,
       actualMonth: "",
-      skip: 0
+      skip: 0,
+      selectedEvent: []
     };
   }
   
@@ -212,10 +213,6 @@ export default class Calendar extends React.Component {
     console.log(this.state);
   }
   
-  openEventInfor(event) {
-    //open modal here again to update the event and be able to see it
-    console.log(event);
-  }
   
   renderEvent(day) {
     if (day.eventsInDay && day.day !== null && day.eventsInDay.length > 0) {
@@ -223,7 +220,7 @@ export default class Calendar extends React.Component {
         <div className="events">
           {day.eventsInDay.map((event, index) => (
             <div>
-              <div key={index} className="event" onClick={() => this.setState({show: true, showUpdateEventContent: true})}>{event.Event}</div>
+              <div key={index} className="event" onClick={() => this.setState({show: true, showUpdateEventContent: true, selectedEvent: event})}>{event.Event}HEre</div>
             </div>
           ))}
         </div>
@@ -302,7 +299,7 @@ export default class Calendar extends React.Component {
           </Modal.Header>
           <Modal.Body>
             {this.state.showAddEventContent ? <CreateEvent date={ this.state.actualMonth + "/" + this.state.selectedDate + "/" + this.state.actualYear}/> : <div></div> }
-            {this.state.showUpdateEventContent ? <UpdateEvent /> : <div></div> }
+            {this.state.showUpdateEventContent ? <UpdateEvent eventInfo={this.state.selectedEvent}/> : <div></div> }
           </Modal.Body>
         </Modal>
       </div>
