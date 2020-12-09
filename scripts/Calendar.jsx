@@ -18,13 +18,9 @@ export default class Calendar extends React.Component {
       showAddEventContent: false,
       selectedDate: "",
       show: false,
-<<<<<<< HEAD
-      actualMonth: ""
-    }
-=======
+      actualMonth: "",
       skip: 0
     };
->>>>>>> 3a5b58e0fd657fda82c9d753406e97d8b120c878
   }
   
   makeCalendar(events = []) {
@@ -180,24 +176,14 @@ export default class Calendar extends React.Component {
   }
   
   getAllEventsFromDB() {
-<<<<<<< HEAD
-    let month;
-    if (this.state.currentMonth  <= 10) {
-      month = this.state.currentMonth + 2;
-      //this.setState({actualMonth: month})
-    } else {
-      month = this.state.currentMonth - 10;
-      //this.setState({actualMonth: month})
-=======
     let month = this.state.currentMonth;
-    if (this.state.skip === 1){
+    if (this.state.skip === 0) {
       if (this.state.currentMonth <= 2) {
         month = this.state.currentMonth + 10;
       } else {
         month = this.state.currentMonth - 2;
       }
       console.log("in getAllEventsFromDB and month =", month);
->>>>>>> 3a5b58e0fd657fda82c9d753406e97d8b120c878
     }
     
     
@@ -208,7 +194,6 @@ export default class Calendar extends React.Component {
     });
     
     Socket.on('received events', (data) => {
-<<<<<<< HEAD
       console.log("received events", data)
       this.setState({events: data})
       this.renderEvents(data)
@@ -228,22 +213,14 @@ export default class Calendar extends React.Component {
   componentDidUpdate() {
     console.log(this.state.actualMonth)
     console.log(this.state)
-=======
-      this.setState({events: data});
-      this.renderEvents(data);
-    });
   }
 
   componentDidMount() {
     this.getAllEventsFromDB();
-    // , () => {
-    // (this.setState({skip: 1}));
-    // };
   }
   
   componentDidUpdate() {
     console.log(this.state);
->>>>>>> 3a5b58e0fd657fda82c9d753406e97d8b120c878
   }
   
   openEventInfor(event) {
