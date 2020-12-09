@@ -97,6 +97,11 @@ export function ContentMain() {
       const output = JSON.parse(e.target.result);
       const format = JSON.stringify(output, null, 2);
       document.getElementById('result').value = format;
+      
+      Socket.emit('import', {
+        import: output,
+      });
+     console.log(output);
     };
 
     readFiles.readAsText(uploadedFile.item(0));
