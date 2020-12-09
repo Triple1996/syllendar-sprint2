@@ -107,7 +107,8 @@ export default class Calendar extends React.Component {
           this.setState({
             calMonth: this.getMonthName(this.state.currentMonth)
           });
-          this.getAllEventsFromDB();
+          this.makeCalendar(this.state.events);
+          // this.getAllEventsFromDB();
         }
       );
     } else {
@@ -120,7 +121,8 @@ export default class Calendar extends React.Component {
         this.setState({
           calMonth: this.getMonthName(this.state.currentMonth)
         });
-        this.getAllEventsFromDB();
+        this.makeCalendar(this.state.events);
+        // this.getAllEventsFromDB();
       });
     }
   }
@@ -133,7 +135,8 @@ export default class Calendar extends React.Component {
           this.setState({
             calMonth: this.getMonthName(this.state.currentMonth)
           });
-          this.getAllEventsFromDB();
+          this.makeCalendar(this.state.events);
+          // this.getAllEventsFromDB();
         }
       );
     } else if (this.state.currentMonth < 12) {
@@ -144,38 +147,44 @@ export default class Calendar extends React.Component {
           });
         }
         this.setState({ calMonth: this.getMonthName(this.state.currentMonth) });
-        this.getAllEventsFromDB();
+        this.makeCalendar(this.state.events);
+        // this.getAllEventsFromDB();
       });
     }
     
   }
   
   renderEvents(events) {
-    if (this.state.skip == 0) {
+    if (this.state.skip === 0) {
       if (this.state.currentMonth > 2) {
         this.setState({ currentMonth: this.state.currentMonth - 2.0 }, () => {
           this.makeCalendar(events.allEvents);
+          this.setState({skip: 1});
         });
       } else {
         this.setState({ currentMonth: this.state.currentMonth + 10.0 }, () => {
           this.makeCalendar(events.allEvents);
+          this.setState({skip: 1});
         });
       }
     }
     else{
       this.makeCalendar(events.allEvents);
     }
+    
   }
   
   getAllEventsFromDB() {
-    let month;
-    if (this.state.currentMonth > 10) {
-      month = this.state.currentMonth - 10;
-    } else {
-      month = this.state.currentMonth + 2;
+    let month = this.state.currentMonth;
+    if (this.state.skip === 1){
+      if (this.state.currentMonth <= 2) {
+        month = this.state.currentMonth + 10;
+      } else {
+        month = this.state.currentMonth - 2;
+      }
+      console.log("in getAllEventsFromDB and month =", month);
     }
     
-    this.setState({skip: 1});
     
     Socket.emit('load events', {
       email: window.sessionStorage.getItem('email'),
@@ -191,7 +200,9 @@ export default class Calendar extends React.Component {
 
   componentDidMount() {
     this.getAllEventsFromDB();
-    // => (this.setState({skip: 1}));
+    // , () => {
+    // (this.setState({skip: 1}));
+    // };
   }
   
   componentDidUpdate() {

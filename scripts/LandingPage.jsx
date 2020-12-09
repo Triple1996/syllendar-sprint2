@@ -39,12 +39,12 @@ export function LandingPage() {
         <a href="#"><i className="fa fa-linkedin" ></i> </a>
         </div>
         <div className="fourthmember">
-        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" width="150" height="150" className="center"/>
+        <img src="/static/pictureSam.jpg" width="150" height="150" className="center"/>
         <h1>Samuel Mota</h1>
         <p> Worked with Front-End</p>
         <p>Student at New Jersey Institute of Technology</p>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-        <a href="#"><i className="fa fa-linkedin" ></i> </a>
+        <a href="https://www.linkedin.com/in/samuel-mota-55a406201/"><i className="fa fa-linkedin" ></i> </a>
          </div>
         <div className="fifthmember">
         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" width="150" height="150" className="center"/>
