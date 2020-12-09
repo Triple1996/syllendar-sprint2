@@ -85,7 +85,7 @@ export function LandingPage() {
       </div>
       <div className="thirdmember">
         <img
-          src="/static/pictureShaq.jpg"
+          src="/static/pictureSaksham.jpg"
           alt="/static/blankProfilePic.jpg"
           width="150"
           height="150"
