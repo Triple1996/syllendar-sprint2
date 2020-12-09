@@ -110,8 +110,7 @@ export default class Calendar extends React.Component {
           this.setState({
             calMonth: this.getMonthName(this.state.currentMonth)
           });
-          // this.makeCalendar(this.state.events);
-          this.getAllEventsFromDB();
+          this.getAllEventsFromDB(this.state.actualYear);
         }
       );
     } else {
@@ -120,12 +119,13 @@ export default class Calendar extends React.Component {
           this.setState({
             actualYear: this.state.actualYear - 1
           });
+          this.getAllEventsFromDB(this.state.actualYear - 1);
+        } else {
+          this.getAllEventsFromDB(this.state.actualYear);
         }
         this.setState({
           calMonth: this.getMonthName(this.state.currentMonth)
         });
-        // this.makeCalendar(this.state.events);
-        this.getAllEventsFromDB();
       });
     }
   }
@@ -138,8 +138,7 @@ export default class Calendar extends React.Component {
           this.setState({
             calMonth: this.getMonthName(this.state.currentMonth)
           });
-          // this.makeCalendar(this.state.events);
-          this.getAllEventsFromDB();
+          this.getAllEventsFromDB(this.state.actualYear);
         }
       );
     } else if (this.state.currentMonth < 12) {
@@ -148,10 +147,11 @@ export default class Calendar extends React.Component {
           this.setState({
             actualYear: this.state.actualYear + 1
           });
+          this.getAllEventsFromDB(this.state.actualYear + 1);
+        } else {
+          this.getAllEventsFromDB(this.state.actualYear);
         }
         this.setState({ calMonth: this.getMonthName(this.state.currentMonth) });
-        // this.makeCalendar(this.state.events);
-        this.getAllEventsFromDB();
       });
     }
     
@@ -176,7 +176,7 @@ export default class Calendar extends React.Component {
     }
   }
   
-  getAllEventsFromDB() {
+  getAllEventsFromDB(realYear) {
     let month = this.state.currentMonth;
     if (this.state.skip === 1) {
       if (this.state.currentMonth >= 11) {
@@ -187,11 +187,12 @@ export default class Calendar extends React.Component {
       console.log("in getAllEventsFromDB and month =", month);
     }
     
+    console.log('realYear value:', realYear);
     this.setState({ actualMonth: month });
     
     Socket.emit('load events', {
       email: window.sessionStorage.getItem('email'),
-      year: this.state.actualYear,
+      year: realYear,
       month: month,
     });
     
@@ -203,7 +204,7 @@ export default class Calendar extends React.Component {
   }
 
   componentDidMount() {
-    this.getAllEventsFromDB();
+    this.getAllEventsFromDB(this.state.actualYear);
   }
   
   componentDidUpdate() {

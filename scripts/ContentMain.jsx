@@ -97,9 +97,12 @@ export function ContentMain() {
       const output = JSON.parse(e.target.result);
       const format = JSON.stringify(output, null, 2);
       document.getElementById('result').value = format;
-      
+      const user = window.sessionStorage.getItem('name');
+      const email = window.sessionStorage.getItem('email');
       Socket.emit('import', {
         file: format,
+        username: user,
+        email: email,
       });
      console.log(format);
     };
