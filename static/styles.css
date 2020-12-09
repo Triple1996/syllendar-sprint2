@@ -15,7 +15,7 @@ button{
     right: 20px;
     width: 215px;
     height: auto;
-    background-color: Bisque;
+    background-color: #d8ecf3;
     text-align: center;
     padding: 10px;
     border-radius: 15px;
@@ -90,10 +90,10 @@ h2{
   text-align: center;
 }
 
-.container{
+#content{
   background-image: linear-gradient(lightblue, grey);
-  width: 100%;
-  height:100%;
+  margin: 0px;
+  height:100vh;
  
 }
 
@@ -139,7 +139,7 @@ body {
       rgba(244,213,182,1) 100%
   );
   margin: 0;
-  pdading: 0;
+  padding: 0;
   height: 100%;
   background-repeat: no-repeat;
   background-attachment: fixed;
