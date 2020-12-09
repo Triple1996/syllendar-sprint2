@@ -203,14 +203,12 @@ export default class Calendar extends React.Component {
   }
 
   componentDidMount() {
-    let currentTmpMonth = this.state.currentMonth;
     this.getAllEventsFromDB();
-    this.setState({actualMonth: currentTmpMonth});
   }
   
   componentDidUpdate() {
-    //console.log(this.state.actualMonth);
-    //console.log(this.state);
+    console.log(this.state.actualMonth);
+    console.log(this.state);
   }
   
   openEventInfor(event) {

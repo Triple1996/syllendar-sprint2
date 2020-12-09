@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import { Socket } from './Socket';
-import { Form } from 'react-bootstrap';
-
 
 export default function CreateEvent({ date, closeModal }) {
   // TODO - Figure out which one we need from the user, which one we can generate with the info of the date selected
@@ -11,7 +8,6 @@ export default function CreateEvent({ date, closeModal }) {
   // we can create the date something like this
   //const currentDate = `${date.month}/${date.day}/${date.year}`;
   // then we can pass this as the startdate and remove the whole startdt useState hook, I will comment it out .
-  console.log("in createEvent date = ", date)
 
   const [title, setTitle] = useState('');
   const [startdt, setStartdt] = useState(date);
@@ -22,8 +18,7 @@ export default function CreateEvent({ date, closeModal }) {
   const [location, setLocation] = useState('');
   const [contact, setContact] = useState("")
   const [des, setDes] = useState('');
-  const [sameDayEvent, setSameDayEvent] = useState(true)
-  
+  const [sameDayEvent, setSameDayEvent] = useState(true);
 
   function handleSubmit() {
     
@@ -47,11 +42,9 @@ export default function CreateEvent({ date, closeModal }) {
       contact,
       des,
     });
+    
+    //TODO: figure out how to close the modal when done!!!!!
 
-  }
-  
-  function handleChooseDate(e) {
-    console.log(e)
   }
 
     return (
@@ -69,21 +62,11 @@ export default function CreateEvent({ date, closeModal }) {
                   <div className="col-10 text-center">
                     <input
                       className="form-control form-group"
-                      value={starttm}
-                      onChange={(e) => setStarttm(e.target.value)}
-                      placeholder="Start Time"
-                    />
-                  </div>
-                  <div className="col-10 text-center">
-                    <input
-                      className="form-control form-group"
                       value={startdt}
                       onChange={(e) => setStartdt(e.target.value)}
-                      placeholder="Start Date (get as a prop!!!)"
+                      placeholder="Start Date"
                     />
                   </div>
-                  
-                  
                   <div className="col-10 text-center">
                     <div className="row">
                       <div className="col-1">
@@ -100,21 +83,22 @@ export default function CreateEvent({ date, closeModal }) {
                       </div>
                     </div>
                   </div>
-                  
                   {sameDayEvent ? 
-                    "" 
+                    <div></div> 
                     :  
                     <div className="col-10 text-center">
                       <label>End Date</label>
                       <input className="form-control form-group" type="date" name="endDate" placeholder="End Date" value={enddt} onChange={(e) => setEnddt(e.target.value)}/>
                     </div>
                   }
-                  
-                 
-                  
-                  
-                  
-                  
+                 <div className="col-10 text-center">
+                    <input
+                      className="form-control form-group"
+                      value={starttm}
+                      onChange={(e) => setStarttm(e.target.value)}
+                      placeholder="Start Time"
+                    />
+                  </div>
                   <div className="col-10 text-center">
                     <input
                       className="form-control form-group"
