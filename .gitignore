@@ -5,4 +5,3 @@ sql_and_api_keys.env
 apikeys.env
 __pycache__
 apiGoogleconfig.json
-static/script.js
