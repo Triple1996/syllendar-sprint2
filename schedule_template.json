@@ -1,0 +1,26 @@
+{
+  "Schedule": [
+    {
+        "Title": "Math",
+	"StartDate": "12/08/2020",
+	"StartTime": "07:00",
+	"EndDate": "12/09/2020",
+	"EndTime": "08:30",
+	"Important": "false",
+	"Location": "KUPF204",
+	"Contact Number": "+10000000000",
+	"Description": "Test Event 1"
+    },
+    {
+        "Title": "Language",
+	"StartDate": "12/10/2020",
+	"StartTime": "07:00",
+	"EndDate": "12/11/2020",
+	"EndTime": "08:30",
+	"Important": "false",
+	"Location": "CKB202",
+	"Contact Number": "+10000000000",
+	"Description": "Test Event 2"
+    }  
+ ]
+}
