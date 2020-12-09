@@ -220,7 +220,7 @@ export default class Calendar extends React.Component {
         <div className="events">
           {day.eventsInDay.map((event, index) => (
             <div>
-              <div key={index} className="event" onClick={() => this.setState({show: true, showUpdateEventContent: true, selectedEvent: event})}>{event.Event}HEre</div>
+              <div key={index} className="event" onClick={() => this.setState({show: true, showUpdateEventContent: true, selectedEvent: event})}>{event.Event}</div>
             </div>
           ))}
         </div>
@@ -294,7 +294,7 @@ export default class Calendar extends React.Component {
           <Modal.Header closeButton>
             <Modal.Title id="example-modal-sizes-title-lg">
               {this.state.showAddEventContent ? "Create Event" : "" }
-              {this.state.showUpdateEventContent ? "Update Event" : "" }
+              {this.state.showUpdateEventContent ? "Event Information" : "" }
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>

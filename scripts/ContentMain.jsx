@@ -119,7 +119,6 @@ export function ContentMain() {
 
   return (
     <div>
-      <h2>My Calendar</h2>
       <button type="button" onClick={AboutPage}>About Us</button>
       <Calendar />
       <div className="info">
