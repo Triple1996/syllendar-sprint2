@@ -99,10 +99,12 @@ export function ContentMain() {
       document.getElementById('result').value = format;
       
       Socket.emit('import', {
-        import: output,
+        file: format,
       });
-     console.log(output);
+     console.log(format);
     };
+    
+    
 
     readFiles.readAsText(uploadedFile.item(0));
   }

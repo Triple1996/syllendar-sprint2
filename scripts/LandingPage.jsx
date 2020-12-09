@@ -105,8 +105,8 @@ export function LandingPage() {
       </div>
       <div className="fourthmember">
         <img
-          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-          alt="/static/pictureSam.jpg"
+          src="/static/pictureSam.jpg"
+          alt="/static/blankProfilePic.jpg"
           width="150"
           height="150"
           className="center"

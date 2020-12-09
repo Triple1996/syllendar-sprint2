@@ -167,6 +167,11 @@ def new_login(data):
 
     # emit_all_events
 
+@socketio.on("import")
+def new_import(data):
+    json = data["file"]
+    print(json)
+
 @app.route("/")
 def index():
     """
