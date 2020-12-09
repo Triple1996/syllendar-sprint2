@@ -111,8 +111,8 @@ def add_event(data):
     email = data["email"]
     title = data["title"]
     startdt = data["startdt"]
-    starttm = data["starttm"]
-    enddt = data["enddt"]
+    starttm = data["actualStartTm"]
+    enddt = data["actualEndTm"]
     endtm = data["endtm"]
     imp = data["imp"]
     location = data["location"]
@@ -128,15 +128,13 @@ def add_event(data):
     print("adding new event!")
 
     # Add to database if event does not exist
-    if (
-        db.session.query(
-            exists().where(
-                models.Events.event_start_date == starttm
-                and models.Events.name == startdt
-                and models.Events.event_end_time == name
-            )
-        ).scalar()
-    ) != True:
+    results = db.session.query(models.Events).filter(models.Events.email == email).all()
+    exists_flag = False
+    for event in results:
+        if (event.event_start_date, event.event_start_time) == (startdt, starttm):
+            exists_flag = True
+            
+    if not exists_flag:
         db.session.add(
             models.Events(
                 name, email, title, startdt, starttm, enddt, endtm, imp, 'False', location, contact, des, day, year, month
@@ -196,14 +194,13 @@ def new_import(data):
         
         print("adding new event!")
         
-        if (
-        db.session.query(
-            exists().where(
-                models.Events.event_start_date == startdt
-                and models.Events.event_start_time == starttm
-                and models.Events.name == name
-            )
-        ).scalar()) != True:
+        results = db.session.query(models.Events).filter(models.Events.email == email).all()
+        exists_flag = False
+        for event in results:
+            if (event.event_start_date, event.event_start_time) == (startdt, starttm):
+                exists_flag = True
+                
+        if not exists_flag:
             db.session.add(
                 models.Events(
                     name, email, title, startdt, starttm, enddt, endtm, imp, 'False', location, contact, des, day, year, month
