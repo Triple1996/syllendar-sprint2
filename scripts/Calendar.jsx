@@ -18,6 +18,7 @@ export default class Calendar extends React.Component {
       showAddEventContent: false,
       selectedDate: "",
       show: false,
+      actualMonth: "",
       skip: 0
     };
   }
@@ -176,7 +177,7 @@ export default class Calendar extends React.Component {
   
   getAllEventsFromDB() {
     let month = this.state.currentMonth;
-    if (this.state.skip === 1){
+    if (this.state.skip === 0) {
       if (this.state.currentMonth <= 2) {
         month = this.state.currentMonth + 10;
       } else {
@@ -193,16 +194,27 @@ export default class Calendar extends React.Component {
     });
     
     Socket.on('received events', (data) => {
-      this.setState({events: data});
-      this.renderEvents(data);
-    });
+      console.log("received events", data)
+      this.setState({events: data})
+      this.renderEvents(data)
+    })
   }
 
   componentDidMount() {
-    this.getAllEventsFromDB();
-    // , () => {
-    // (this.setState({skip: 1}));
-    // };
+    
+    let currentTmpMonth = this.state.currentMonth
+    
+    console.log("HERERERREER", this.state.currentMonth)
+    
+    this.getAllEventsFromDB()
+    
+    this.setState({actualMonth: currentTmpMonth})
+    
+  }
+  
+  componentDidUpdate() {
+    console.log(this.state.actualMonth)
+    console.log(this.state)
   }
   
   componentDidUpdate() {
@@ -298,7 +310,7 @@ export default class Calendar extends React.Component {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {this.state.showAddEventContent ? <CreateEvent date={this.state.selectedDate}/> : <div></div> }
+            {this.state.showAddEventContent ? <CreateEvent date={ this.state.actualMonth + "/" + this.state.selectedDate + "/" + this.state.actualYear}/> : <div></div> }
             {this.state.showUpdateEventContent ? <UpdateEvent /> : <div></div> }
           </Modal.Body>
         </Modal>

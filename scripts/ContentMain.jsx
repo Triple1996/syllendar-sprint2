@@ -18,6 +18,8 @@ export function ContentMain() {
       setEmail(data.email);
       setName(data.name);
       window.sessionStorage.setItem('email', data.email)
+      window.sessionStorage.setItem('name', data.name)
+      window.sessionStorage.setItem('image', data.image)
       console.log(`Logged in with ${data.email}`);
     });
   });
