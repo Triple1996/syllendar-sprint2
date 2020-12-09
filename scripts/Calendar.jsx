@@ -74,8 +74,10 @@ export default class Calendar extends React.Component {
         y[x] = {day: null, eventsInDay: []};
       }
     }
-    
+    console.log('Events before change', this.state.events);
     this.setState({ z: y });
+    this.setState({events: []});
+    console.log('Events after makeCalendar', this.state.events);
   }
 
   getMonthName(month) {
@@ -108,8 +110,8 @@ export default class Calendar extends React.Component {
           this.setState({
             calMonth: this.getMonthName(this.state.currentMonth)
           });
-          this.makeCalendar(this.state.events);
-          // this.getAllEventsFromDB();
+          // this.makeCalendar(this.state.events);
+          this.getAllEventsFromDB();
         }
       );
     } else {
@@ -122,8 +124,8 @@ export default class Calendar extends React.Component {
         this.setState({
           calMonth: this.getMonthName(this.state.currentMonth)
         });
-        this.makeCalendar(this.state.events);
-        // this.getAllEventsFromDB();
+        // this.makeCalendar(this.state.events);
+        this.getAllEventsFromDB();
       });
     }
   }
@@ -136,8 +138,8 @@ export default class Calendar extends React.Component {
           this.setState({
             calMonth: this.getMonthName(this.state.currentMonth)
           });
-          this.makeCalendar(this.state.events);
-          // this.getAllEventsFromDB();
+          // this.makeCalendar(this.state.events);
+          this.getAllEventsFromDB();
         }
       );
     } else if (this.state.currentMonth < 12) {
@@ -148,8 +150,8 @@ export default class Calendar extends React.Component {
           });
         }
         this.setState({ calMonth: this.getMonthName(this.state.currentMonth) });
-        this.makeCalendar(this.state.events);
-        // this.getAllEventsFromDB();
+        // this.makeCalendar(this.state.events);
+        this.getAllEventsFromDB();
       });
     }
     
@@ -160,32 +162,32 @@ export default class Calendar extends React.Component {
       if (this.state.currentMonth > 2) {
         this.setState({ currentMonth: this.state.currentMonth - 2.0 }, () => {
           this.makeCalendar(events.allEvents);
-          this.setState({skip: 1});
         });
+        this.setState({ skip: 1 });
       } else {
         this.setState({ currentMonth: this.state.currentMonth + 10.0 }, () => {
           this.makeCalendar(events.allEvents);
-          this.setState({skip: 1});
         });
+        this.setState({ skip: 1 });
       }
     }
     else{
       this.makeCalendar(events.allEvents);
     }
-    
   }
   
   getAllEventsFromDB() {
     let month = this.state.currentMonth;
-    if (this.state.skip === 0) {
-      if (this.state.currentMonth <= 2) {
-        month = this.state.currentMonth + 10;
+    if (this.state.skip === 1) {
+      if (this.state.currentMonth >= 11) {
+        month = this.state.currentMonth - 10;
       } else {
-        month = this.state.currentMonth - 2;
+        month = this.state.currentMonth + 2;
       }
       console.log("in getAllEventsFromDB and month =", month);
     }
     
+    this.setState({ actualMonth: month });
     
     Socket.emit('load events', {
       email: window.sessionStorage.getItem('email'),
@@ -194,31 +196,21 @@ export default class Calendar extends React.Component {
     });
     
     Socket.on('received events', (data) => {
-      console.log("received events", data)
-      this.setState({events: data})
-      this.renderEvents(data)
-    })
+      this.setState({events: data});
+      this.renderEvents(data);
+      console.log('Received data from socket:', data, 'Month used for query:', month);
+    });
   }
 
   componentDidMount() {
-    
-    let currentTmpMonth = this.state.currentMonth
-    
-    console.log("HERERERREER", this.state.currentMonth)
-    
-    this.getAllEventsFromDB()
-    
-    this.setState({actualMonth: currentTmpMonth})
-    
+    let currentTmpMonth = this.state.currentMonth;
+    this.getAllEventsFromDB();
+    this.setState({actualMonth: currentTmpMonth});
   }
   
   componentDidUpdate() {
-    console.log(this.state.actualMonth)
-    console.log(this.state)
-  }
-  
-  componentDidUpdate() {
-    console.log(this.state);
+    //console.log(this.state.actualMonth);
+    //console.log(this.state);
   }
   
   openEventInfor(event) {
