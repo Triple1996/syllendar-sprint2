@@ -68,15 +68,16 @@ def load_events(data):
     """
     Get events from DB 
     """
-    print("in loading events socket")
+    print("Loading events...")
     email = data['email']
     year = data['year']
     month = data['month']
     
-    print(month)
-    
-    results = db.session.query(models.Events).filter(models.Events.email == email and models.Events.year == year and models.Events.month == month).all()
-    
+    results = db.session.query(models.Events).\
+    filter(models.Events.email == str(email)).\
+    filter(models.Events.year == str(year)).\
+    filter(models.Events.month == str(month))
+
     all_events = []
         
     for event in results:
@@ -100,7 +101,6 @@ def load_events(data):
             'allEvents': all_events
         }, room=flask.request.sid
     )
-    # print(all_events)
 
 @socketio.on("add event")
 def add_event(data):
@@ -131,9 +131,9 @@ def add_event(data):
     if (
         db.session.query(
             exists().where(
-                models.Events.event_start_time == starttm
-                and models.Events.event_start_date == startdt
-                and models.Events.name == name
+                models.Events.event_start_date == starttm
+                and models.Events.name == startdt
+                and models.Events.event_end_time == name
             )
         ).scalar()
     ) != True:
