@@ -85,7 +85,7 @@ export function LandingPage() {
       </div>
       <div className="thirdmember">
         <img
-          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+          src="/static/pictureShaq.jpg"
           alt="/static/blankProfilePic.jpg"
           width="150"
           height="150"
@@ -98,7 +98,7 @@ export function LandingPage() {
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         />
-        <a href="#top">
+        <a href="https://www.linkedin.com/in/saksham-banga-47aab516b/">
           <i className="fa fa-linkedin" />
           {' '}
         </a>
@@ -106,7 +106,7 @@ export function LandingPage() {
       <div className="fourthmember">
         <img
           src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-          alt="/static/blankProfilePic.jpg"
+          alt="/static/pictureSam.jpg"
           width="150"
           height="150"
           className="center"
@@ -118,7 +118,7 @@ export function LandingPage() {
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         />
-        <a href="#top">
+        <a href="https://www.linkedin.com/in/samuel-mota-55a406201">
           <i className="fa fa-linkedin" />
           {' '}
         </a>

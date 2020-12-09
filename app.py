@@ -73,6 +73,8 @@ def load_events(data):
     year = data['year']
     month = data['month']
     
+    print(month)
+    
     results = db.session.query(models.Events).filter(models.Events.email == email and models.Events.year == year and models.Events.month == month).all()
     
     all_events = []

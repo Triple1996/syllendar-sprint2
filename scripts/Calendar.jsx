@@ -18,6 +18,7 @@ export default class Calendar extends React.Component {
       showAddEventContent: false,
       selectedDate: "",
       show: false,
+      actualMonth: "",
       skip: 0
     };
   }
@@ -107,7 +108,8 @@ export default class Calendar extends React.Component {
           this.setState({
             calMonth: this.getMonthName(this.state.currentMonth)
           });
-          this.getAllEventsFromDB();
+          this.makeCalendar(this.state.events);
+          // this.getAllEventsFromDB();
         }
       );
     } else {
@@ -120,7 +122,8 @@ export default class Calendar extends React.Component {
         this.setState({
           calMonth: this.getMonthName(this.state.currentMonth)
         });
-        this.getAllEventsFromDB();
+        this.makeCalendar(this.state.events);
+        // this.getAllEventsFromDB();
       });
     }
   }
@@ -133,7 +136,8 @@ export default class Calendar extends React.Component {
           this.setState({
             calMonth: this.getMonthName(this.state.currentMonth)
           });
-          this.getAllEventsFromDB();
+          this.makeCalendar(this.state.events);
+          // this.getAllEventsFromDB();
         }
       );
     } else if (this.state.currentMonth < 12) {
@@ -144,38 +148,44 @@ export default class Calendar extends React.Component {
           });
         }
         this.setState({ calMonth: this.getMonthName(this.state.currentMonth) });
-        this.getAllEventsFromDB();
+        this.makeCalendar(this.state.events);
+        // this.getAllEventsFromDB();
       });
     }
     
   }
   
   renderEvents(events) {
-    if (this.state.skip == 0) {
+    if (this.state.skip === 0) {
       if (this.state.currentMonth > 2) {
         this.setState({ currentMonth: this.state.currentMonth - 2.0 }, () => {
           this.makeCalendar(events.allEvents);
+          this.setState({skip: 1});
         });
       } else {
         this.setState({ currentMonth: this.state.currentMonth + 10.0 }, () => {
           this.makeCalendar(events.allEvents);
+          this.setState({skip: 1});
         });
       }
     }
     else{
       this.makeCalendar(events.allEvents);
     }
+    
   }
   
   getAllEventsFromDB() {
-    let month;
-    if (this.state.currentMonth > 10) {
-      month = this.state.currentMonth - 10;
-    } else {
-      month = this.state.currentMonth + 2;
+    let month = this.state.currentMonth;
+    if (this.state.skip === 0) {
+      if (this.state.currentMonth <= 2) {
+        month = this.state.currentMonth + 10;
+      } else {
+        month = this.state.currentMonth - 2;
+      }
+      console.log("in getAllEventsFromDB and month =", month);
     }
     
-    this.setState({skip: 1});
     
     Socket.emit('load events', {
       email: window.sessionStorage.getItem('email'),
@@ -184,14 +194,27 @@ export default class Calendar extends React.Component {
     });
     
     Socket.on('received events', (data) => {
-      this.setState({events: data});
-      this.renderEvents(data);
-    });
+      console.log("received events", data)
+      this.setState({events: data})
+      this.renderEvents(data)
+    })
   }
 
   componentDidMount() {
-    this.getAllEventsFromDB();
-    // => (this.setState({skip: 1}));
+    
+    let currentTmpMonth = this.state.currentMonth
+    
+    console.log("HERERERREER", this.state.currentMonth)
+    
+    this.getAllEventsFromDB()
+    
+    this.setState({actualMonth: currentTmpMonth})
+    
+  }
+  
+  componentDidUpdate() {
+    console.log(this.state.actualMonth)
+    console.log(this.state)
   }
   
   componentDidUpdate() {
@@ -287,7 +310,7 @@ export default class Calendar extends React.Component {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {this.state.showAddEventContent ? <CreateEvent date={this.state.selectedDate}/> : <div></div> }
+            {this.state.showAddEventContent ? <CreateEvent date={ this.state.actualMonth + "/" + this.state.selectedDate + "/" + this.state.actualYear}/> : <div></div> }
             {this.state.showUpdateEventContent ? <UpdateEvent /> : <div></div> }
           </Modal.Body>
         </Modal>
