@@ -33,7 +33,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import pytz
 import threading 
-
+import json 
 
 app = flask.Flask(__name__)
 
@@ -131,8 +131,8 @@ def add_event(data):
     if (
         db.session.query(
             exists().where(
-                models.Events.event_start_time == starttm
-                and models.Events.event_start_date == startdt
+                models.Events.event_start_date == startdt
+                and models.Events.event_start_time == starttm
                 and models.Events.name == name
             )
         ).scalar()
@@ -170,8 +170,49 @@ def new_login(data):
 
 @socketio.on("import")
 def new_import(data):
-    json = data["file"]
-    print(json)
+    content = data["file"]
+    username = data["username"]
+    user_email = data["email"]
+    json_content = json.loads(content)
+    event_list = json_content["Schedule"]
+    print("Events to be added from import: ", len(event_list))
+    for event in event_list:
+        print(event)
+        name = username
+        email = user_email
+        title = event["Title"]
+        startdt = event["StartDate"]
+        starttm = event["StartTime"]
+        enddt = event["EndDate"]
+        endtm = event["EndTime"]
+        imp = event["Important"]
+        location = event["Location"]
+        contact = event["Contact Number"]
+        des = event["Description"]
+        
+        month = startdt.split('/')[0]
+        year = startdt.split('/')[2]
+        day = startdt.split('/')[1]
+        
+        print("adding new event!")
+        
+        if (
+        db.session.query(
+            exists().where(
+                models.Events.event_start_date == startdt
+                and models.Events.event_start_time == starttm
+                and models.Events.name == name
+            )
+        ).scalar()) != True:
+            db.session.add(
+                models.Events(
+                    name, email, title, startdt, starttm, enddt, endtm, imp, 'False', location, contact, des, day, year, month
+                )
+            )
+
+            db.session.commit()
+
+            print("Added to the db")
 
 @app.route("/")
 def index():
